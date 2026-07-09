@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unmarked — Generative Art</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-family: 'Lora', serif;
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--anthropic-mid-gray);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .control {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .val {
+            color: var(--anthropic-orange);
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .canvas-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--anthropic-dark);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .legend {
+            display: flex;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--anthropic-mid-gray);
+            margin-top: 4px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Unmarked</h1>
+            <div class="subtitle">two rooms, some doors leave a thread</div>
+            <p>Two populations move by different rules — one drifting through a slow noise field, one stepping along fixed lines. Occasionally one of them crosses to the other side. Sometimes the crossing leaves a faint thread back to where it started. Sometimes it doesn't — the arrival looks exactly like something that was always native to the room it lands in, and there is no way to tell the difference by looking.</p>
+            <div class="control">
+                <label>Crossing rate: <span class="val" id="crossVal">0.15</span>%/frame</label>
+                <input type="range" id="crossRate" min="0" max="100" value="15">
+            </div>
+            <div class="control">
+                <label>Trace probability: <span class="val" id="traceVal">50</span>%</label>
+                <input type="range" id="traceProb" min="0" max="100" value="50">
+            </div>
+            <div class="legend">
+                <span><span class="dot" style="background:#d97757"></span>drift</span>
+                <span><span class="dot" style="background:#6a9bcc"></span>lines</span>
+                <span><span class="dot" style="background:#c9a0dc"></span>traced crossing</span>
+            </div>
+        </div>
+        <div class="canvas-wrap" id="canvasWrap"></div>
+    </div>
+
+    <script>
+        let particles = [];
+        const N = 90;
+        let crossRateSlider, traceProbSlider;
+        let W, H, mid;
+
+        function setup() {
+            const wrap = document.getElementById('canvasWrap');
+            W = Math.min(wrap.clientWidth, 900);
+            H = Math.min(window.innerHeight - 40, 720);
+            let cnv = createCanvas(W, H);
+            cnv.parent('canvasWrap');
+            mid = W / 2;
+            background(20, 20, 19);
+            colorMode(HSB, 360, 100, 100, 100);
+
+            for (let i = 0; i < N; i++) {
+                particles.push(makeParticle(i % 2 === 0 ? 'L' : 'R'));
+            }
+
+            crossRateSlider = document.getElementById('crossRate');
+            traceProbSlider = document.getElementById('traceProb');
+            crossRateSlider.addEventListener('input', updateLabels);
+            traceProbSlider.addEventListener('input', updateLabels);
+            updateLabels();
+        }
+
+        function updateLabels() {
+            document.getElementById('crossVal').textContent = (crossRateSlider.value / 100 * 1).toFixed(2);
+            document.getElementById('traceVal').textContent = traceProbSlider.value;
+        }
+
+        function makeParticle(region) {
+            if (region === 'L') {
+                return {
+                    region: 'L',
+                    x: random(0, mid),
+                    y: random(0, H),
+                    hue: random(20, 40),
+                    gridDir: null
+                };
+            } else {
+                let laneCount = 14;
+                let lane = floor(random(laneCount));
+                return {
+                    region: 'R',
+                    x: random(mid, W),
+                    y: (lane + 0.5) * (H / laneCount),
+                    hue: random(195, 215),
+                    lane: lane,
+                    laneCount: laneCount,
+                    dir: random() < 0.5 ? 1 : -1,
+                    stepLen: random(3, 9)
+                };
+            }
+        }
+
+        function draw() {
+            noStroke();
+            fill(20, 20, 19, 4);
+            rect(0, 0, W, H);
+
+            // faint staff lines on the right, drawn each frame so they persist under fading trails
+            stroke(0, 0, 100, 3);
+            strokeWeight(1);
+            let laneCount = 14;
+            for (let i = 0; i <= laneCount; i++) {
+                let y = i * (H / laneCount);
+                line(mid, y, W, y);
+            }
+            noStroke();
+
+            let crossRate = crossRateSlider.value / 10000;
+            let traceProb = traceProbSlider.value / 100;
+
+            for (let p of particles) {
+                let px = p.x, py = p.y;
+
+                if (p.region === 'L') {
+                    let angle = noise(p.x * 0.006, p.y * 0.006, frameCount * 0.002) * TWO_PI * 2;
+                    let vx = cos(angle) * 1.3;
+                    let vy = sin(angle) * 1.3;
+                    p.x += vx;
+                    p.y += vy;
+                    stroke(p.hue, 55, 85, 35);
+                    strokeWeight(1.2);
+                    line(px, py, p.x, p.y);
+
+                    if (p.x < 0) p.x = mid - 1;
+                    if (p.x > mid) p.x = 0.01;
+                    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+                } else {
+                    if (frameCount % 14 === 0 && random() < 0.4) p.dir *= -1;
+                    p.x += p.dir * p.stepLen;
+                    let laneY = (p.lane + 0.5) * (H / p.laneCount);
+                    stroke(p.hue, 45, 90, 45);
+                    strokeWeight(1.6);
+                    line(px, laneY, p.x, laneY);
+                    // tick mark rising off the lane, evoking notation
+                    if (frameCount % 9 === 0) {
+                        let tickH = random(4, 16);
+                        line(p.x, laneY, p.x, laneY - tickH);
+                    }
+
+                    if (p.x < mid) p.x = W - 1;
+                    if (p.x > W) p.x = mid + 1;
+                }
+
+                // crossing check
+                if (random() < crossRate) {
+                    let traced = random() < traceProb;
+                    let originX = p.x, originY = p.y;
+
+                    if (p.region === 'L') {
+                        p.region = 'R';
+                        p.laneCount = 14;
+                        p.lane = floor(random(p.laneCount));
+                        p.x = mid + random(5, 40);
+                        p.y = (p.lane + 0.5) * (H / p.laneCount);
+                        p.hue = traced ? p.hue : random(195, 215);
+                        p.dir = random() < 0.5 ? 1 : -1;
+                        p.stepLen = random(3, 9);
+                    } else {
+                        p.region = 'L';
+                        p.x = mid - random(5, 40);
+                        p.y = originY;
+                        p.hue = traced ? p.hue : random(20, 40);
+                        p.gridDir = null;
+                    }
+
+                    if (traced) {
+                        stroke(285, 30, 90, 18);
+                        strokeWeight(0.8);
+                        line(originX, originY, p.x, p.y);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
