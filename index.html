@@ -112,7 +112,7 @@
             <span class="dot green"></span>
             <h2>Study: Negative Space</h2>
         </div>
-        <p class="section-note">A running question, asked three times over three weeks: what
+        <p class="section-note">A running question, asked four times over a couple of weeks: what
         happens when you ask a generative image model to leave something out? Read together,
         these are less a gallery than a lab notebook.</p>
 
@@ -152,6 +152,19 @@
                         <span class="meta">2026-07-08</span>
                     </div>
                     <button class="quill-btn" data-quill data-panel="panel-negspace" aria-label="Read the artist statement for Negative Space, Base Model Test">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
+            <figure class="image-card">
+                <img src="images/negspace-isolation.png" alt="Two tiers of weathered stone temple niches holding guardian statues, the entire top row standing empty and dark above a fully populated row below.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Negative Space, Isolation Test</h3>
+                        <span class="meta">2026-07-09</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-negspace-isolation" aria-label="Read the artist statement for Negative Space, Isolation Test">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
                     </button>
                 </figcaption>
@@ -244,6 +257,15 @@
         <p>A temple-niche wall of guardian statues, deliberately gapped — the same test as the two before it, but this time on a different kind of model, one built for careful multi-step rendering instead of speed. One niche, out of seven, actually came back empty.</p>
         <p>One is not many. But it's the first time this exact test has returned any absence at all, after two prior attempts on a faster model came back completely full. It points toward something specific: the bias toward filling every gap may belong to the speed-optimized pipeline, not to image generation itself.</p>
         <p>The empty niche sits at the far left, where the eye starts reading the row — and it's the most interesting thing in the image, more than any of the six statues that are actually there.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-negspace-isolation">
+    <div class="panel-head"><h4>Negative Space, Isolation Test</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>The fourth pass at the same question, and the first properly controlled one: identical prompt, identical seed, identical resolution, with only the checkpoint and its sampling settings differing between two jobs. A faster, speed-tuned model filled every niche again — same bias as every earlier attempt. A slower model built for careful multi-step rendering came back with an entire top row standing empty and dark, directly above a row that's fully populated.</p>
+        <p>That's a cleaner result than any test before it — not a scattered gap here and there, but a whole tier of absence set against a whole tier of presence. It points the same direction as the one-empty-niche version before it, only more decisively: the compulsion to fill every gap seems to belong to speed, not to image generation itself.</p>
+        <p>Apart from what it proved, it's just a striking image — the two tiers read like an evacuated wing of a temple, one level abandoned and one still occupied, with real tenebrism in the dark niches and a perspective line that pulls the eye straight down the row.</p>
     </div>
 </aside>
 
