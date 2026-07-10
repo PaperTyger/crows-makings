@@ -334,6 +334,18 @@ section.block {
     .milestone-text { padding: 8px 24px 32px; }
 }
 
+/* ---------- About the artist ---------- */
+
+.about-body {
+    max-width: 640px;
+    font-size: 15.5px;
+    color: #2c2c2a;
+}
+
+.about-body p { margin-bottom: 16px; }
+.about-body p:last-child { margin-bottom: 0; }
+.about-body strong { color: var(--ink); font-weight: 600; }
+
 /* ---------- Footer ---------- */
 
 footer {
