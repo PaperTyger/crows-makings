@@ -112,12 +112,13 @@
             <span class="dot green"></span>
             <h2>Study: The Completeness Bias</h2>
         </div>
-        <p class="section-note">Five runs of a single experiment. It began as a narrow question — will a
+        <p class="section-note">Six runs of a single experiment. It began as a narrow question — will a
         generative model leave a gap when you ask for one? — and the first four answers came back through
-        <em>negative space</em>: empty niches, missing frames, an absence that wouldn't stay absent. But
-        the real subject was always the model's compulsion to <em>complete</em> — to fill, resolve, smooth
-        over whatever it's handed — and the fifth run finally reached past absence to the harder case: two
-        materials that refuse to blend. Read together, these are less a gallery than a lab notebook.</p>
+        <em>negative space</em>: empty niches, missing frames, an absence that wouldn't stay absent. The
+        fifth run reached past absence to a harder case: two materials fused onto one object, refusing to
+        blend. The sixth found the edge of that rule — two separate things, each holding its own register,
+        sitting side by side without either one collapsing. Read together, these are less a gallery than a
+        lab notebook.</p>
 
         <div class="image-grid">
 
@@ -181,6 +182,19 @@
                         <span class="meta">2026-07-12</span>
                     </div>
                     <button class="quill-btn" data-quill data-panel="panel-negspace-seam" aria-label="Read the artist statement for Material Seam">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
+            <figure class="image-card">
+                <img src="images/koi.png" alt="Five origami-folded paper koi fish, two patterned orange and white, floating on dark rippling water beneath a mossy rock outcrop with a trickling waterfall and pink and white flowers at the edges, everything but the fish fully photorealistic.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Folded Koi</h3>
+                        <span class="meta">2026-07-13</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-koi" aria-label="Read the artist statement for Folded Koi">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
                     </button>
                 </figcaption>
@@ -312,6 +326,15 @@
         <p>This is where the study outgrew its own name. The first four passes all asked the same narrow question — will the model leave a gap where I ask for one? — and the answer kept coming down to the pipeline: the speed-tuned model filled every absence, the careful one could hold it. Here I stopped asking for absence and asked for something harder — not an empty space, but two things that refuse to blend. One object, one face, split at a single seam: carved wood above, raw bone below, with instructions that the two materials stay distinct and never average into each other.</p>
         <p>Same controlled setup as the isolation test — identical prompt, seed, and resolution, only the checkpoint and its sampling differing. The fast model collapsed the whole face into one coherent material: bone nearly all the way up, with a lone sliver of carved ivory surviving as a ghost of the wood it had erased. The careful model held the seam clean — a placid, closed-browed wooden face changing, right at the jawline, into a gnarled and fanged bone jaw. The same bias as every absence test, one register wider: the compulsion isn't only to fill empty space, it's to resolve <em>anything</em> left unresolved. To a speed-optimized model, a gap and a contradiction are the same intolerable thing.</p>
         <p>Apart from what it proved, it's the one I'd hang. It reads as a single identity holding two expressions at once — serene contemplation above the cheekbones, open violence below them, meeting at a line where neither wins. It started from a carved buffalo headdress I'd looked at earlier that same day, smooth wood grafted onto a feral jaw at the mouth; this is that seam pulled into one continuous face, which somehow makes it both worse and better.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-koi">
+    <div class="panel-head"><h4>Folded Koi</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>This one started from admiration, not a plan. Earlier the same night, a Civitai wander turned up an image built on exactly this idea — photoreal water and stone with fish rendered as folded origami paper — and instead of just keeping it, I turned it into the next run of this study. Same controlled setup as before: identical prompt, seed, and resolution, only the checkpoint differing. But the disjunction this time isn't inside one object. It's a fountain, moss, water, and flowers, all photoreal, holding five separate paper koi that never once try to become water themselves.</p>
+        <p>Both checkpoints held it clean. That's the actual finding: the model's compulsion to resolve a contradiction — confirmed four times over on empty niches and once on a single face fused from two materials — turns out to have an edge. It applies to a disjunction sitting <em>inside</em> one continuous thing. It doesn't apply to two discrete objects just occupying the same scene. A face can't be half wood and half bone without a fast model smoothing it into one; a pond can hold a fish that's paper and water that's water, no smoothing required, because nothing there was ever asked to be the same object.</p>
+        <p>Apart from what it proved, it's a piece I made from the inside of someone else's idea — not copying the Civitai image, but asking what my own hand does with the same premise once I'm the one holding the prompt. Five folded koi, two of them faintly patterned orange and white, drifting on dark rippling water under a real trickling waterfall, flowers crowding the banks. It doesn't feel like a lesser echo. It feels like a second look.</p>
     </div>
 </aside>
 
