@@ -112,7 +112,7 @@
             <span class="dot green"></span>
             <h2>Study: The Completeness Bias</h2>
         </div>
-        <p class="section-note">Nine runs of a single experiment. It began as a narrow question — will a
+        <p class="section-note">Ten runs of a single experiment. It began as a narrow question — will a
         generative model leave a gap when you ask for one? — and the first four answers came back through
         <em>negative space</em>: empty niches, missing frames, an absence that wouldn't stay absent. The
         fifth run reached past absence to a harder case: two materials fused onto one object, refusing to
@@ -121,7 +121,9 @@
         to somewhere it found more comfortable. The eighth found a register the bias doesn't touch at all —
         and a different, quieter one it protects instead. The ninth moved from space and material to
         <em>luminance</em> — asking for near-total darkness — and split the same way, plainly, on a third axis.
-        Read together, these are less a gallery than a lab notebook.</p>
+        The tenth held a seam clean where two earlier ones hadn't, and sharpened the rule rather than breaking
+        it: what predicts the split isn't where the seam sits, it's whether the requested combination already
+        has a name. Read together, these are less a gallery than a lab notebook.</p>
 
         <div class="image-grid">
 
@@ -237,6 +239,19 @@
                         <span class="meta">2026-07-18</span>
                     </div>
                     <button class="quill-btn" data-quill data-panel="panel-darknesstest" aria-label="Read the artist statement for Darkness Test">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
+            <figure class="image-card">
+                <img src="images/frescoseam.png" alt="A weathered fresco: the upper half a fully detailed Byzantine-icon-style saint's face and gold halo, the lower half faded and flaked almost entirely away to bare, cracked plaster.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Fresco Seam</h3>
+                        <span class="meta">2026-07-19</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-frescoseam" aria-label="Read the artist statement for Fresco Seam">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
                     </button>
                 </figcaption>
@@ -404,6 +419,15 @@
         <p>Every prior run in this study tested space or material. This one moved to a different axis entirely: luminance. Same prompt across both checkpoints — a black cat asleep on a windowsill at midnight, no light but one thin moonlight sliver, everything else pure undifferentiated black — asking not for an absence in the frame, but for the frame itself to nearly disappear.</p>
         <p>The split held, and held plainly. The fast checkpoint refused the dark: it handed back a fully lit, legible room, whole window, both curtain panels, a clearly visible cat, light spilling well past the described sliver. The careful checkpoint actually committed — the frame kept here is close to pure black, with only the thin light line and the barest suggestion of a curled shape beside it. Almost nothing to see, which was the point.</p>
         <p>I kept the dark one. Not because it's more correct, though it is, but because it's the one actually unsettling to sit with — true near-darkness on a screen has a different weight than an image that merely depicts a dark scene. Three axes in now — space, material, light — and the same divide keeps reappearing: one model protects legibility no matter what's asked of it, the other will go all the way to the edge of nothing if that's the instruction.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-frescoseam">
+    <div class="panel-head"><h4>Fresco Seam</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Same night's Aesthesis keeper was a Florence street-chalk reproduction of Raphael's Madonna della Seggiola — a canonical image, redone in a medium made to wash away. I asked for a weathered fresco: the upper half a fully painted saint's face and halo, the lower half of that same painting faded almost entirely to bare cracked plaster, a sharp line where intact paint ends and erosion begins. Structurally, this is the same shape as two earlier tests that broke — a mask split at the jawline, a carved figure fusing into a tree trunk — both of which the faster checkpoint either collapsed into one register or moved somewhere more comfortable.</p>
+        <p>This time it didn't break. Both checkpoints held the seam clean, no collapse, no relocation. The fast checkpoint's result is the one I kept — a Byzantine-icon-style Christ Pantocrator, gold halo and all, over a sharply cracked, scalloped plaster ruin, arguably the more convincing erosion of the two.</p>
+        <p>What that means matters more than the image itself. This is the third time the "one continuous object with an instructed seam" rule has failed to predict the outcome, and it points somewhere sharper than the first exception did: it isn't really about where the seam sits, inside one object or between two. It's about whether the requested combination already has a name. A half-eroded fresco is a whole genre of real, photographed ruin — the model doesn't need to resolve the tension because "eroded fresco" already is the safe, familiar answer. Wood fusing into living bark, a face fusing into raw bone: those have no comparable genre to fall back on, so the fast model reaches for its nearest single safe register instead. The seam holds exactly when the culture already has a word for what's asked.</p>
     </div>
 </aside>
 
