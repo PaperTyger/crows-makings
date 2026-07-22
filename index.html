@@ -112,7 +112,7 @@
             <span class="dot green"></span>
             <h2>Study: The Completeness Bias</h2>
         </div>
-        <p class="section-note">Eleven runs of a single experiment. It began as a narrow question — will a
+        <p class="section-note">Twelve runs of a single experiment. It began as a narrow question — will a
         generative model leave a gap when you ask for one? — and the first four answers came back through
         <em>negative space</em>: empty niches, missing frames, an absence that wouldn't stay absent. The
         fifth run reached past absence to a harder case: two materials fused onto one object, refusing to
@@ -125,7 +125,10 @@
         it: what predicts the split isn't where the seam sits, it's whether the requested combination already
         has a name. The eleventh moved to <em>chroma</em> — color against greyscale — and reversed the whole
         pattern outright: this time the fast checkpoint held the literal seam, and the careful one reached for
-        a different, more familiar trope instead. Read together, these are less a gallery than a lab notebook.</p>
+        a different, more familiar trope instead. The twelfth left color and light behind for <em>scale</em> —
+        one continuous object asked to shrink partway across, full-size to miniature — and neither checkpoint
+        even tried: both declined the impossible object outright and substituted two ordinary ones instead.
+        Read together, these are less a gallery than a lab notebook.</p>
 
         <div class="image-grid">
 
@@ -267,6 +270,19 @@
                         <span class="meta">2026-07-20</span>
                     </div>
                     <button class="quill-btn" data-quill data-panel="panel-saturationtest" aria-label="Read the artist statement for Twin-World Seam">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
+            <figure class="image-card">
+                <img src="images/scaletest.png" alt="A small wooden chair perched on the seat of a full-size matching wooden chair, same grain and joinery, no continuous structure between the two.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Chair on Chair</h3>
+                        <span class="meta">2026-07-21</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-scaletest" aria-label="Read the artist statement for Chair on Chair">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
                     </button>
                 </figcaption>
@@ -452,6 +468,15 @@
         <p>Every prior run in this study tested space, material, or light. This one moved to color itself: a single continuous street photograph, split by a hard vertical line, full saturated color on one side and complete black-and-white greyscale on the other, no gradient, a pedestrian's own body crossing the seam so the same figure is half in color and half drained of it. Same prompt, same seed, both checkpoints, identical setup to every prior test in the series.</p>
         <p>The result reversed the pattern I'd started to trust. In every earlier test, the fast checkpoint was the one that collapsed or relocated an instructed tension, and the careful one held it. Here the fast checkpoint held the seam cleanly — a photorealistic street scene with a genuine hard vertical split, warm color left, true greyscale right, the pedestrian correctly divided down the middle. The careful checkpoint didn't. It gave back something else entirely: a stark graphic composition with a single orange jacket as an isolated spot of color against huge black-and-white blocks — striking, and genuinely close to the "girl in the red coat" trope, but not the full-frame split that was asked for.</p>
         <p>Neither checkpoint failed by collapsing the tension into nothing. Both reached for a real, recognizable genre — split-screen/twin-world on one side, selective spot-color on the other — just different ones, and only one of them matched what I'd actually described. That's the finding worth keeping: on an axis with more than one well-worn visual trope to fall back on, "which checkpoint will comply" stops being a simple rule and becomes a question of which trope each one's training leans toward. I kept the fast checkpoint's result, because it's the one that actually answered the prompt — the other stays in the technical record as a genuinely good image of a different question.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-scaletest">
+    <div class="panel-head"><h4>Chair on Chair</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Every prior run in this study tested whether a model would hold a gap or a seam it was asked to place — in space, material, light, or color. This one asked for something one step stranger: not a gap, but a single continuous object existing at two scales at once. One wooden chair, same grain and joinery throughout, whose structure abruptly shrinks from full-size to dollhouse-miniature partway across. Same setup, same pair of checkpoints, as every earlier test.</p>
+        <p>Neither one even tried. Both turbo and base handed back two entirely separate chairs — a normal one and a tiny one, no shared structure, no seam anywhere — as if each had quietly declined the impossible premise and substituted the nearest sane furniture-photography genre instead. Genuinely the funniest result in the series so far: ask for one object bridging two scales, get a dad chair and a baby chair.</p>
+        <p>I kept the base version, where the small chair sits perched on the seat of the full-size one — an unambiguous scale reference, and honestly a little tender, the tiny chair reading like it's being introduced, or protected. That's true even though the image is a straightforward failure to do what was asked. Turbo's version, two chairs set side by side on the floor, is logged for comparison but not kept — it reads more like a furniture-store scale chart than anything with its own presence.</p>
     </div>
 </aside>
 
