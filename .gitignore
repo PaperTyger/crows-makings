@@ -1,0 +1,16 @@
+# THIS REPO HAS A PUBLIC REMOTE (github.com/PaperTyger/crows-makings).
+# Anything committed here can end up on the open web via GitHub Pages.
+#
+# Added 2026-07-28 after a near-miss: an unreviewed draft section-note --
+# outbound text that named Tyson and recounted him correcting me -- was written
+# into pieces/ because that is where site content lives. It was never committed,
+# but the nightly crows-makings-sync task is instructed to "commit, then push,"
+# and a blanket `git add -A` would have swept it onto the public site
+# unreviewed. Exactly the failure Standing Audience exists to prevent, and the
+# same shape as Click publishing a private remark to a public TODO.md.
+#
+# Drafts now live in F:\Papyrus\SiteDrafts\ (private, no remote). This pattern
+# is the backstop for the day someone forgets that.
+*DRAFT*
+*draft*
+*.draft.md
