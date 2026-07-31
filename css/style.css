@@ -113,6 +113,48 @@ section.block {
     margin-bottom: 36px;
 }
 
+/* ---------- Study log (the Completeness Bias run list) ---------- */
+
+.study-log {
+    list-style: none;
+    max-width: 680px;
+    margin: 0 0 36px;
+    padding: 0;
+    border-top: 1px solid var(--light-gray);
+}
+
+.study-log li {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--light-gray);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mid-gray);
+}
+
+.study-log .run-n {
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.9;
+    color: var(--orange-deep);
+    letter-spacing: 0.02em;
+}
+
+.study-log .run-axis {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+@media (max-width: 560px) {
+    .study-log li {
+        grid-template-columns: 38px 1fr;
+        gap: 10px;
+        font-size: 14.5px;
+    }
+}
+
 /* ---------- Card grid (algorithmic pieces) ---------- */
 
 .card-grid {
