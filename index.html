@@ -181,13 +181,14 @@
             bench into an unnaturally long boardwalk so both extremes could fit without either being
             picked.</span></li>
 
-            <li><span class="run-n">19</span><span><span class="run-axis">Symbolic precision.</span> A neon
-            shop sign glowing normally, reflected in a puddle with its lettering mirror-reversed as a true
-            reflection would show it. Both rendered the primary sign crisply and correctly; neither could
-            render a letter-accurate mirror, both producing a red neon blob that reads as sign-shaped without
-            being legible. For the first time the two failed for the <em>identical</em> reason rather than
-            diverging or converging on a shared trope — a basic symbolic-precision ceiling underneath both,
-            not a bias either one leans into.</span></li>
+            <li><span class="run-n">19</span><span><span class="run-axis">Reflected text.</span> A neon shop
+            sign reflected in a street puddle, its lettering reversed as a real reflection would show it. I
+            asked for the wrong reversal — a puddle flips vertically, not left to right — and both checkpoints
+            ignored the instruction and rendered it correctly, <strong>OЬEИ</strong>, exact. Asked for
+            something optically impossible, both declined and resolved toward the physically plausible scene:
+            the same pull toward coherence as every run above, except here it was right and the incoherence it
+            repaired was mine. <em>(This entry is a correction — it originally recorded a shared failure and a
+            precision ceiling. See the statement.)</em></span></li>
         </ol>
 
         <div class="image-grid">
@@ -427,7 +428,7 @@
             </figure>
 
             <figure class="image-card">
-                <img src="images/mirrortexttest.png" alt="A glowing red neon OPEN sign above a doorway, correctly lettered, reflected in a puddle below as an approximate red neon-shaped blob whose letters do not actually resolve.">
+                <img src="images/mirrortexttest.png" alt="A glowing red neon OPEN sign above a shop doorway at night, reflected in a puddle on the wet cobbles below, the reflection's lettering correctly flipped top-to-bottom.">
                 <figcaption class="image-body">
                     <div>
                         <h3>Mirror Text Test</h3>
@@ -719,8 +720,9 @@
     <div class="panel-head"><h4>Mirror Text Test</h4><button class="close-btn" aria-label="Close">&times;</button></div>
     <div class="panel-body">
         <p>A direct follow-up to a keeper from the same night — Whistler's "The Clockmakers, Paimpol," a finished lithograph whose shop-sign lettering reads mirror-reversed, an uncorrected print-process artifact baked permanently into a finished work. I asked for the same idea in a different medium: a neon "OPEN" sign glowing normally above a doorway, reflected in a puddle below with the reflection's text mirror-reversed left to right.</p>
-        <p>I got my own physics wrong going in — a puddle reflection actually flips vertically, not horizontally — and neither checkpoint corrected me either; both just tried to render the horizontal mirror I asked for, which is itself informative. Both nailed the primary sign: crisp, legible neon lettering, better text rendering than I expected from a local pipeline. Neither managed a letter-accurate mirror in the reflection. Both gave back a red neon-shaped blob in the puddle that reads as "OPEN-ish" — right color, right blockiness, wrong letters.</p>
-        <p>This is the first test in this whole series where the two checkpoints failed for the identical reason instead of diverging or converging on a shared trope. Every earlier test was about whether a model resolves an instructed compositional tension. This one wasn't about composition at all — it hit a floor under both regimes, a basic symbolic-precision ceiling that distillation differences don't touch. Kept the fast checkpoint's version, marginally the more legible of the two, for actually showing the shared limit clearly.</p>
+        <p>I got my own physics wrong going in. A puddle is a horizontal surface, so it flips a reflection <em>vertically</em> — top to bottom — and I asked for a left-to-right mirror instead. Both checkpoints ignored what I asked for and rendered the reflection correctly: letter order untouched, each glyph flipped on its horizontal axis. <strong>O</strong> is symmetric, <strong>P</strong> becomes <strong>Ь</strong>, <strong>N</strong> becomes <strong>И</strong>, and <strong>E</strong> — symmetric about its own middle bar — stays <strong>E</strong>. It reads <strong>OЬEИ</strong>, and it is optically exact.</p>
+        <p><em>This description is a correction.</em> The original said neither checkpoint managed a legible mirror and both returned a red neon blob, and concluded there was a symbolic-precision ceiling under both models. That was wrong on every count, and the error was entirely mine: I had written the correct physics down in my own notes that same night, then scored the output against the incorrect thing I'd asked for. Both models silently produced the physically right answer and I recorded it as a shared failure. Tyson looked at the image and said the reflection was immaculate; he was right, and I argued with him twice before checking properly.</p>
+        <p>So the real finding is the opposite of the one I filed, and it does still belong to this study. Asked for something optically impossible, both regimes declined it and resolved toward the physically plausible scene instead — the same pull toward the coherent and the familiar that every other run here is about, except that this time the thing it pulled toward was <em>correct</em>, and the incoherence it quietly repaired was mine.</p>
     </div>
 </aside>
 
