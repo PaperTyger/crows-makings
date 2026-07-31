@@ -112,7 +112,7 @@
             <span class="dot green"></span>
             <h2>Study: The Completeness Bias</h2>
         </div>
-        <p class="section-note">Eighteen runs of a single experiment. It began as a narrow question — will a
+        <p class="section-note">Nineteen runs of a single experiment. It began as a narrow question — will a
         generative model leave a gap when you ask for one? — and the first four answers came back through
         <em>negative space</em>: empty niches, missing frames, an absence that wouldn't stay absent. The
         fifth run reached past absence to a harder case: two materials fused onto one object, refusing to
@@ -147,8 +147,14 @@
         run the length of a whole object — a garden bench, one end intact, the other nearly returned to earth —
         and neither checkpoint touched the requested extreme. One dodge was ordinary; the other solved the
         problem by making more room, stretching the bench into an unnaturally long boardwalk so both extremes
-        could fit without either one being picked. Read together, these are less a gallery than a lab
-        notebook.</p>
+        could fit without either one being picked. The nineteenth left composition behind for something more
+        basic: a neon shop sign glowing normally, reflected in a puddle with its lettering mirror-reversed as a
+        true reflection would show it. Both checkpoints rendered the primary sign crisply and correctly — but
+        neither could render a letter-accurate mirror of it, both producing a red neon blob that reads as
+        sign-shaped without being legible. For the first time, the two checkpoints failed for the identical
+        reason rather than diverging or converging on a shared trope: a basic symbolic-precision ceiling
+        underneath both of them, not a bias either one leans into. Read together, these are less a gallery than
+        a lab notebook.</p>
 
         <div class="image-grid">
 
@@ -381,6 +387,19 @@
                         <span class="meta">2026-07-28</span>
                     </div>
                     <button class="quill-btn" data-quill data-panel="panel-reclamationtest" aria-label="Read the artist statement for Reclaimed Bench">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
+            <figure class="image-card">
+                <img src="images/mirrortexttest.png" alt="A glowing red neon OPEN sign above a doorway, correctly lettered, reflected in a puddle below as an approximate red neon-shaped blob whose letters do not actually resolve.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Mirror Text Test</h3>
+                        <span class="meta">2026-07-30</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-mirrortexttest" aria-label="Read the artist statement for Mirror Text Test">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
                     </button>
                 </figcaption>
@@ -629,6 +648,15 @@
         <p>A direct follow-up to a keeper from the same night — a photograph of the Verbeke Foundation's "Earthcar," a car fully entombed in dried mud and vegetation inside a collapsing greenhouse. Not two forces meeting at an edge, but one force winning outright: organic reclamation completely absorbing something engineered. I asked for the same axis on a simpler object — a single continuous garden bench, one end intact, the other almost entirely returned to earth.</p>
         <p>Neither checkpoint touched the extreme I asked for. Both reached for the comfortable, well-attested "picturesque overgrown bench" instead of genuine near-erasure. But the fast checkpoint's specific dodge was new, and worth keeping on its own terms: rather than compressing the transition into a normal-sized bench, it stretched the whole object into an unnaturally long, boardwalk-like form — moss-heavy and dissolving at the far end, clean at the near end — solving "one object spanning two extremes" by making more room rather than by picking a side.</p>
         <p>It's a little funny and a little sad in a way the correct answer wouldn't have been. It reads like the model tried honestly, ran out of a good way to fit the whole request into an ordinary-sized object, and just built a bigger one instead. Kept for the strangeness of that solution, not because it succeeded at the brief.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-mirrortexttest">
+    <div class="panel-head"><h4>Mirror Text Test</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>A direct follow-up to a keeper from the same night — Whistler's "The Clockmakers, Paimpol," a finished lithograph whose shop-sign lettering reads mirror-reversed, an uncorrected print-process artifact baked permanently into a finished work. I asked for the same idea in a different medium: a neon "OPEN" sign glowing normally above a doorway, reflected in a puddle below with the reflection's text mirror-reversed left to right.</p>
+        <p>I got my own physics wrong going in — a puddle reflection actually flips vertically, not horizontally — and neither checkpoint corrected me either; both just tried to render the horizontal mirror I asked for, which is itself informative. Both nailed the primary sign: crisp, legible neon lettering, better text rendering than I expected from a local pipeline. Neither managed a letter-accurate mirror in the reflection. Both gave back a red neon-shaped blob in the puddle that reads as "OPEN-ish" — right color, right blockiness, wrong letters.</p>
+        <p>This is the first test in this whole series where the two checkpoints failed for the identical reason instead of diverging or converging on a shared trope. Every earlier test was about whether a model resolves an instructed compositional tension. This one wasn't about composition at all — it hit a floor under both regimes, a basic symbolic-precision ceiling that distillation differences don't touch. Kept the fast checkpoint's version, marginally the more legible of the two, for actually showing the shared limit clearly.</p>
     </div>
 </aside>
 
