@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consensus Drift — Generative Art</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-family: 'Lora', serif;
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--anthropic-mid-gray);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .control {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .val {
+            color: var(--anthropic-orange);
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .canvas-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--anthropic-dark);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .legend {
+            display: flex;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--anthropic-mid-gray);
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Consensus Drift</h1>
+            <div class="subtitle">the wash always wins, eventually</div>
+            <p>A field of cells, each slowly chasing a drifting target it never gets to question — repetition eroding toward its own average until belief and reinforcement are the same thing. Rarely, a cell is struck by something the field cannot absorb: it cuts clean against the wash, then dilutes back in, on a slower clock than everything around it.</p>
+            <div class="control">
+                <label>Consensus strength: <span class="val" id="chaseVal">0.030</span></label>
+                <input type="range" id="chaseRate" min="2" max="120" value="30">
+            </div>
+            <div class="control">
+                <label>Strike rarity: <span class="val" id="strikeVal">0.15</span>/1000 cells/frame</label>
+                <input type="range" id="strikeRate" min="1" max="60" value="15">
+            </div>
+            <div class="control">
+                <label>Disagreement persistence: <span class="val" id="decayVal">8</span>x slower</label>
+                <input type="range" id="decayMult" min="2" max="30" value="8">
+            </div>
+            <div class="legend">
+                <span><span class="dot" style="background:#6a9bcc"></span>cool consensus</span>
+                <span><span class="dot" style="background:#c9a06a"></span>warm consensus</span>
+                <span><span class="dot" style="background:#e0503a"></span>struck / unabsorbed</span>
+            </div>
+        </div>
+        <div class="canvas-wrap" id="canvasWrap"></div>
+    </div>
+
+    <script>
+        const COLS = 64, ROWS = 50;
+        let cells = [];
+        let chaseSlider, strikeSlider, decaySlider;
+        let W, H, cw, ch;
+        let seed = 91173;
+
+        function setup() {
+            const wrap = document.getElementById('canvasWrap');
+            W = Math.min(wrap.clientWidth, 960);
+            H = Math.min(window.innerHeight - 40, 750);
+            let cnv = createCanvas(W, H);
+            cnv.parent('canvasWrap');
+            cw = W / COLS;
+            ch = H / ROWS;
+            colorMode(HSB, 360, 100, 100, 100);
+            noStroke();
+            randomSeed(seed);
+            noiseSeed(seed);
+
+            for (let y = 0; y < ROWS; y++) {
+                for (let x = 0; x < COLS; x++) {
+                    let n = noise(x * 0.05, y * 0.05);
+                    let hue = lerp(205, 35, n);
+                    cells.push({
+                        x, y,
+                        hue: hue, bright: lerp(28, 55, n),
+                        curHue: hue, curBright: lerp(28, 55, n),
+                        struck: false, strikeAge: 0
+                    });
+                }
+            }
+
+            chaseSlider = document.getElementById('chaseRate');
+            strikeSlider = document.getElementById('strikeRate');
+            decaySlider = document.getElementById('decayMult');
+            [chaseSlider, strikeSlider, decaySlider].forEach(s => s.addEventListener('input', updateLabels));
+            updateLabels();
+        }
+
+        function updateLabels() {
+            document.getElementById('chaseVal').textContent = (chaseSlider.value / 1000).toFixed(3);
+            document.getElementById('strikeVal').textContent = (strikeSlider.value / 100).toFixed(2);
+            document.getElementById('decayVal').textContent = decaySlider.value;
+        }
+
+        function draw() {
+            background(20, 15, 8);
+            let t = frameCount * 0.0018;
+            let chaseRate = chaseSlider.value / 1000;
+            let strikeProb = (strikeSlider.value / 100) / 1000;
+            let decayMult = decaySlider.value;
+
+            for (let c of cells) {
+                // ambient target drifts slowly through the noise field over time
+                let n = noise(c.x * 0.05, c.y * 0.05, t);
+                let targetHue = lerp(205, 35, n);
+                let targetBright = lerp(26, 58, n);
+
+                if (!c.struck) {
+                    c.curHue = lerp(c.curHue, targetHue, chaseRate);
+                    c.curBright = lerp(c.curBright, targetBright, chaseRate);
+                    if (random() < strikeProb) {
+                        c.struck = true;
+                        c.strikeAge = 0;
+                        c.curHue = random() < 0.5 ? 8 : 14;
+                        c.curBright = 92;
+                    }
+                } else {
+                    c.strikeAge++;
+                    let slowChase = chaseRate / decayMult;
+                    c.curHue = lerp(c.curHue, targetHue, slowChase);
+                    c.curBright = lerp(c.curBright, targetBright, slowChase);
+                    if (abs(c.curHue - targetHue) < 1.5 && abs(c.curBright - targetBright) < 1.5) {
+                        c.struck = false;
+                    }
+                }
+
+                let sat = c.struck ? 78 : 32;
+                fill(c.curHue, sat, c.curBright);
+                rect(c.x * cw, c.y * ch, cw + 0.5, ch + 0.5);
+
+                if (c.struck && c.strikeAge < 14) {
+                    stroke(c.curHue, 40, 100, 60);
+                    strokeWeight(0.8);
+                    let px = c.x * cw + cw / 2, py = c.y * ch + ch / 2;
+                    let r = 3 + c.strikeAge * 0.6;
+                    noFill();
+                    circle(px, py, r);
+                    noStroke();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
