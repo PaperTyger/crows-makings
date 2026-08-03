@@ -3,6 +3,25 @@
 // attribute. One panel open at a time; overlay click, close button, and
 // Escape all dismiss it.
 
+// Piece count, derived from the cards themselves. The hero blurb and the section
+// note both used to state the number in prose, and on 2026-08-02 a fourth piece
+// shipped while the hero still said "three" — the section note had been updated
+// and the hero hadn't. Two hardcoded copies of one fact is the bug; a count that
+// reads the DOM cannot go stale. The markup keeps a correct word as its fallback
+// for no-JS, so this corrects rather than supplies.
+(function () {
+    const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
+                   'eight', 'nine', 'ten', 'eleven', 'twelve'];
+    const n = document.querySelectorAll('#algorithmic .card-grid .piece-card').length;
+    if (!n) return;
+    const word = WORDS[n] || String(n);
+    document.querySelectorAll('[data-piece-count]').forEach((el) => {
+        el.textContent = el.dataset.pieceCount === 'cap'
+            ? word.charAt(0).toUpperCase() + word.slice(1)
+            : word;
+    });
+})();
+
 (function () {
     const overlay = document.querySelector('.panel-overlay');
     let openPanel = null;
