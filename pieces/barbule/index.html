@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbule — Generative Art</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-family: 'Lora', serif;
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--anthropic-mid-gray);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .control {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .val {
+            color: var(--anthropic-orange);
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .canvas-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #08080a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Barbule</h1>
+            <div class="subtitle">nothing here is painted</div>
+            <p>A field of fixed platelets, each with its own fixed orientation, never repainted. Every color you see is computed live from the angle between a platelet's orientation and a sweeping light angle — no platelet stores a hue. Where orientation and light align, a narrow band lights up and its color shifts continuously through that alignment window; everywhere else stays near-black. Order the field and the sweep reads as a coherent traveling shimmer. Disorder it and the same sweep produces only scattered, uncorrelated glints — the structure is still there, just no longer legible as one thing moving.</p>
+            <div class="control">
+                <label>Sweep speed: <span class="val" id="sweepVal">0.010</span> rad/frame</label>
+                <input type="range" id="sweepSpeed" min="0" max="50" value="10">
+            </div>
+            <div class="control">
+                <label>Structural order: <span class="val" id="orderVal">1.00</span></label>
+                <input type="range" id="orderAmt" min="0" max="100" value="100">
+            </div>
+        </div>
+        <div class="canvas-wrap" id="canvasWrap"></div>
+    </div>
+
+    <script>
+        let platelets = [];
+        let sweepSlider, orderSlider;
+        let W, H;
+        const COLS = 34, ROWS = 34;
+
+        function setup() {
+            const wrap = document.getElementById('canvasWrap');
+            W = Math.max(300, Math.min(wrap.clientWidth || 760, 760));
+            H = Math.max(300, Math.min(window.innerHeight - 40, 760));
+            let cnv = createCanvas(W, H);
+            cnv.parent('canvasWrap');
+            colorMode(HSB, 360, 100, 100, 100);
+            angleMode(RADIANS);
+            noStroke();
+
+            const cellW = W / COLS, cellH = H / ROWS;
+            for (let i = 0; i < COLS; i++) {
+                for (let j = 0; j < ROWS; j++) {
+                    const x = (i + 0.5) * cellW + random(-cellW * 0.25, cellW * 0.25);
+                    const y = (j + 0.5) * cellH + random(-cellH * 0.25, cellH * 0.25);
+                    platelets.push({
+                        x, y,
+                        // two fixed orientation fields, never touched again after setup:
+                        // thetaOrdered varies smoothly with position (a real crystal domain
+                        // would look like this); thetaDisordered is independent per platelet,
+                        // with no relation to its neighbors at all.
+                        thetaOrdered: noise(x * 0.006, y * 0.006) * PI,
+                        thetaDisordered: random(0, PI),
+                        orderThreshold: random(),   // fixed per platelet; compared to the order slider each frame
+                        w: cellW * random(0.55, 0.8),
+                        h: cellH * random(0.16, 0.26)
+                    });
+                }
+            }
+
+            sweepSlider = document.getElementById('sweepSpeed');
+            orderSlider = document.getElementById('orderAmt');
+            sweepSlider.addEventListener('input', updateLabels);
+            orderSlider.addEventListener('input', updateLabels);
+            updateLabels();
+        }
+
+        function updateLabels() {
+            document.getElementById('sweepVal').textContent = (sweepSlider.value / 1000).toFixed(3);
+            document.getElementById('orderVal').textContent = (orderSlider.value / 100).toFixed(2);
+        }
+
+        function wrapHalfPi(a) {
+            // wrap to [-PI/2, PI/2), since a platelet's orientation is mod PI (no arrow)
+            a = a % PI;
+            if (a > HALF_PI) a -= PI;
+            if (a < -HALF_PI) a += PI;
+            return a;
+        }
+
+        function draw() {
+            background(6, 8, 4);
+
+            const sweepSpeed = sweepSlider.value / 1000;
+            const order = orderSlider.value / 100;
+            const viewAngle = frameCount * sweepSpeed;
+
+            for (const p of platelets) {
+                // structural order picks which orientation field each platelet obeys —
+                // a fixed per-platelet coin flip against the order slider, not a blend.
+                // At order=1 every platelet uses the smooth, spatially-correlated field
+                // (real crystal domains); at order=0 every platelet uses its own
+                // independent random angle. The threshold is fixed; only the comparison moves.
+                const theta = (p.orderThreshold < order) ? p.thetaOrdered : p.thetaDisordered;
+
+                const diff = wrapHalfPi(theta - viewAngle);
+                const align = cos(diff * 2);                  // -1..1, peaks when aligned
+                const specular = pow(max(0, align), 6);        // narrow interference window
+
+                const hueVal = (200 + map(diff, -0.35, 0.35, -140, 140)) % 360;
+                const sat = 35 + specular * 60;
+                const bri = 5 + specular * 92;
+
+                push();
+                translate(p.x, p.y);
+                rotate(theta); // drawn geometry IS the orientation field — order restructures the field itself
+                fill((hueVal + 360) % 360, sat, bri);
+                rectMode(CENTER);
+                rect(0, 0, p.w, p.h, p.h * 0.4);
+                pop();
+            }
+        }
+    </script>
+</body>
+</html>

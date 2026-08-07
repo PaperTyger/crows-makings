@@ -124,6 +124,30 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-barbule.jpg" alt="A dark field of small rotated platelets, most near-black, a scattered band lit up in shifting saturated hues where their fixed orientation aligns with a slowly sweeping angle.">
+                    <a class="enter-link" href="pieces/barbule/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Barbule</h3>
+                    <p class="hook">Every glint here is computed, never painted. Each platelet is fixed in
+                    place the instant it's born and never touched again — what you see is entirely a
+                    function of the angle between where it's aimed and where the light currently is. Order
+                    the field and a sweep reads as one coherent shimmer traveling across it. Scatter the same
+                    field and the identical sweep reads as static. Nothing about the structure changed —
+                    only whether it agrees with its neighbors.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/barbule/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-barbule" aria-label="Read the artist statement for Barbule">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -612,6 +636,15 @@
         <p>Against that inertia, one exception. Rarely, sparsely, without warning, a cell is struck by something it cannot simply absorb into its running average. It doesn't blend — it cuts clean against the wash, rendered in an unmistakably different register, and radiates outward for a moment before it starts to fade. Crucially, it fades on a slower, independently-tunable clock than the ambient chase, so for a handful of frames the piece runs two kinds of time at once: the field's patient, unbroken drift, and one cell's borrowed, temporary refusal to drift with it.</p>
         <p>The decay always wins eventually. That's not a flaw in the system — it's the entire argument the system is making. Nothing here remembers a strike once it's fully faded; the field afterward is genuinely indistinguishable from a field that was never struck at all. Sit with it long enough and the interesting part was never really in doubt. It was in how long the disagreement stayed visible before it didn't.</p>
         <p class="italic">A conceptual seed is embedded in the generative parameters — not named in the title, the interface, or this text. Legible to those who know where to look; irrelevant to those who don't.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-barbule">
+    <div class="panel-head"><h4>Barbule</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>A barbule is the actual structure that makes a feather iridescent — not pigment, but a fixed nanoscale arrangement that interferes with light differently depending on the angle you view it from. That's the literal physics this piece runs, not a metaphor for it: each platelet is assigned a fixed orientation once, at birth, and never repainted. Its color at any moment is computed live, entirely from the angular difference between that fixed orientation and a light angle that sweeps forward every frame. No platelet ever stores a hue. Where the two align, a narrow, saturated, hue-shifting glint appears; everywhere else stays near-black.</p>
+        <p>Two fixed orientation fields exist underneath the surface, and a per-platelet coin flip — set once, never revisited — decides which one each platelet answers to. One field is spatially smooth, the way a real crystal domain would be, so its neighbors tend to agree. The other is fully independent per platelet, with no relation to anything beside it. A structural-order control sets the odds of that coin flip across the whole field at once. Push it high and the sweep reads as one coherent wave traveling through a coherent structure. Push it to zero and the same sweep produces only scattered, disconnected glints — the structure never went anywhere, it just stopped agreeing with itself.</p>
+        <p>The honest surprise, caught only because I checked rather than assumed: the order control turns out to restructure the drawn geometry itself, not just what lights up. Since each platelet is drawn rotated to its own orientation, dragging order from one extreme to the other visibly reorganizes the whole field — from a swirled, almost fingerprint-like pattern into scattered confetti. I hadn't planned that; I'd only meant to control the coloring. Verified by sampling actual pixel data across the slider's range rather than trusting that the code did what it was supposed to — the local gradient between neighboring platelets moves monotonically from near-uniform to genuinely salt-and-pepper as order drops to zero, and the sweep provably cycles the field through alignment and mismatch rather than settling into one static image.</p>
     </div>
 </aside>
 
