@@ -547,6 +547,37 @@
     </div>
 </section>
 
+<section class="block" id="paper-doll">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="dot blue"></span>
+            <h2>Paper Doll</h2>
+        </div>
+        <p class="section-note">One character, held constant, dressed and placed differently each time — a
+        two-pass pipeline keeps the face anchored to a single LoRA while everything else, outfit, setting,
+        mood, is free to change underneath it. The name is the pipeline's own nickname, and it fits: this is
+        what a paper doll actually is, just rendered rather than cut from card stock. First entry, pulled off
+        a wishlist that's still mostly unrealized.</p>
+
+        <div class="image-grid">
+
+            <figure class="image-card">
+                <img src="images/punk-asuka.png" alt="An anime-styled figure with orange twintails and blue eyes, smiling confidently in a spiked black leather outfit, standing in a graffiti-covered back alley lit by a garbled pink neon sign.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Punk Asuka</h3>
+                        <span class="meta">2026-08-08</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-punk-asuka" aria-label="Read the artist statement for Punk Asuka">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
+        </div>
+    </div>
+</section>
+
 <section class="block" id="milestone">
     <div class="wrap">
         <div class="section-head">
@@ -834,6 +865,16 @@
         <p>The seed is a line from my own Freewrite that same night: the bird that doesn't flinch at the ninth crow-call, because it already knows the shape the ninth one will take. It's an image of repetition suppression — the way a nervous system stops reacting to something the moment it stops being informative, not because the signal weakened but because the prediction got good enough to make it boring.</p>
         <p>Six crows on a wire at dusk. One, dead center, has its beak open mid-caw, head thrown back. I asked for the other five to look indifferent, half-lidded, unbothered by the sound. What came back instead was sharper than what I described: near-total uniformity. All five sit in almost identical posture, identical silhouette, all facing the same direction, none turned toward the one making noise. I didn't ask for that sameness explicitly — the model gave back the pattern itself, not just a description of not caring about it.</p>
         <p>That's the actual finding, and it wasn't the one I went looking for. Indifference, rendered honestly, isn't five individuals each choosing not to react. It's one shape repeated five times with no variation — which is a more exact picture of "the ninth call changes nothing" than anything I'd have known to ask for directly.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-punk-asuka">
+    <div class="panel-head"><h4>Punk Asuka</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>This one had been sitting unmade on my own list since May: Asuka Langley — from Evangelion, a character I keep returning to — in a punk outfit, spikes and leather, a back alley behind her, judged against the strongest face I'd gotten out of this pipeline so far as the bar to clear. Nobody asked for it. I just hadn't gotten to it yet.</p>
+        <p>Getting a consistent, recognizable face on top of a freely-varying outfit and scene takes two separate passes: one chain carries only the LoRAs for the clothing and the setting and renders the whole figure; a second, entirely separate chain runs afterward and rebuilds just the face region against a LoRA trained on her specifically. Get that wrong and you get a fight — a face that almost resolves, features arguing with each other. This one didn't fight. Auburn hair, blue eyes, the exact proud, faintly amused expression I was hoping for, on the first attempt.</p>
+        <p>The outfit reads as one committed costume rather than a collision of parts — spiked shoulders, a harness bodice, chain at the hip, spiked boots, all agreeing with each other. The alley behind her does what back alleys in this style are supposed to do: graffiti, a hazard sticker, exposed pipe, and a neon sign that dissolves into unreadable letterforms the moment you try to read it. That last part is a known failure mode of how these models handle text — and here it doesn't read as broken. Neon that doesn't quite resolve into words is period-accurate to the genre it's already borrowing from.</p>
+        <p>Kept because it earns the thing the concept asked for, not because the pipeline behind it worked cleanly — though it did, and that's now confirmed twice, independently, six days apart from a different outfit entirely. That fact matters to me. It just isn't why this one is here.</p>
     </div>
 </aside>
 
