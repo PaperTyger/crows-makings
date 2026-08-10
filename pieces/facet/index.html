@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facet — Generative Art</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-family: 'Lora', serif;
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--anthropic-mid-gray);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .control {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .val {
+            color: var(--anthropic-orange);
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .checkrow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .fixed-note {
+            font-size: 0.75rem;
+            color: var(--anthropic-mid-gray);
+            border-left: 2px solid var(--anthropic-light-gray);
+            padding-left: 10px;
+            margin-bottom: 20px;
+            line-height: 1.45;
+        }
+
+        .canvas-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #08080a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Facet</h1>
+            <div class="subtitle">the lamp never moves</div>
+            <p>A bank of small mirrors, each set once at its own fixed angle and never adjusted. The light source is fixed too — bolted down, off to one side, unmoving for the life of the piece. The only thing that changes is <em>where you are standing</em>.</p>
+            <p>Walk around it and a bright seam crosses the field: the mirrors that happen to bisect the angle between the fixed lamp and your new position, and only those. Their colour is not stored anywhere. It is the path difference through each mirror's layers, so it shortens as you go — gold when you face it square, and bluer the further round you get. The same physics that makes a beetle's back change colour when you move your head, and the reason a photograph of one is always a lie about it.</p>
+            <p>Order the mirror angles and the seam is a single travelling band. Disorder them and the same walk produces scattered, uncorrelated sparks — the structure is still there, just no longer legible as one thing.</p>
+            <div class="control">
+                <label>View angle: <span class="val" id="viewVal">0°</span></label>
+                <input type="range" id="viewAngle" min="-70" max="70" value="0">
+            </div>
+            <div class="control">
+                <label>Structural order: <span class="val" id="orderVal">1.00</span></label>
+                <input type="range" id="orderAmt" min="0" max="100" value="100">
+            </div>
+            <div class="control checkrow">
+                <input type="checkbox" id="autoOrbit" checked>
+                <label for="autoOrbit" style="margin:0">Walk around it for me</label>
+            </div>
+            <div class="fixed-note">Fixed for the life of the piece: every mirror's angle, every mirror's depth in the stack, the thickness that sets its colour, and the position of the lamp. Nothing here is repainted.</div>
+        </div>
+        <div class="canvas-wrap" id="canvasWrap"></div>
+    </div>
+
+    <script>
+        let mirrors = [];
+        let viewSlider, orderSlider, autoBox;
+        let W, H, CX;
+
+        const COLS = 30, ROWS = 30;
+        const MAX_VIEW = 70 * Math.PI / 180;   // how far around the piece you can walk
+        const PARALLAX = 95;                   // px of lateral travel between the nearest and farthest layer
+        const ORBIT_SPEED = 0.0055;            // rad/frame of the automatic walk
+        // Half-range of mirror azimuths. The specular condition is tau = phi/2, so the seam sits
+        // at fraction (phi/2)/TAU_SPAN across the field. At exactly MAX_VIEW/2 the seam reaches
+        // the outer edge at full walk and most of it falls off — measured as a dead zone at ±70°
+        // (lit pixels 34263 at centre, 1586 at the edge). Widening to MAX_VIEW * 0.625 parks the
+        // seam at ~80% of half-width when you are all the way round, so it stays on the object.
+        const TAU_SPAN = MAX_VIEW * 0.625;
+
+        function setup() {
+            const wrap = document.getElementById('canvasWrap');
+            // clamp both dimensions — a hidden/backgrounded tab reports 0 or negative here,
+            // and a negative rect height throws inside p5's rounded-rect renderer (Barbule, 08-06)
+            W = Math.max(300, Math.min(wrap.clientWidth || 760, 760));
+            H = Math.max(300, Math.min((window.innerHeight || 800) - 40, 760));
+            CX = W / 2;
+            let cnv = createCanvas(W, H);
+            cnv.parent('canvasWrap');
+            colorMode(HSB, 360, 100, 100, 100);
+            angleMode(RADIANS);
+            noStroke();
+
+            const cellW = W / COLS, cellH = H / ROWS;
+            for (let i = 0; i < COLS; i++) {
+                for (let j = 0; j < ROWS; j++) {
+                    const x = (i + 0.5) * cellW + random(-cellW * 0.22, cellW * 0.22);
+                    const y = (j + 0.5) * cellH + random(-cellH * 0.22, cellH * 0.22);
+                    mirrors.push({
+                        x, y,
+                        z: random(-1, 1),                                  // depth in the stack — drives parallax
+                        // two fixed azimuth fields, set once and never touched again.
+                        // tauOrdered sweeps across the field with position and is roughened by
+                        // domain noise, so the specular condition is met by a travelling BAND
+                        // rather than by everything at once. Using noise alone here was a real
+                        // bug (2026-08-09): noise() clusters hard around its midpoint, so every
+                        // mirror wanted the same view angle, the field lit up globally at 0° and
+                        // went dark at the edges — which reads as a lamp brightening head-on,
+                        // the exact percept this piece exists to avoid.
+                        // tauDisordered is independent per mirror over the SAME range, so the
+                        // order slider changes the arrangement without changing the brightness.
+                        tauOrdered: map(x, 0, W, -TAU_SPAN, TAU_SPAN) + (noise(x * 0.0055, y * 0.0055) - 0.5) * 0.55,
+                        tauDisordered: random(-TAU_SPAN, TAU_SPAN),
+                        orderThreshold: random(),                          // fixed; only the comparison moves
+                        hueJitter: random(-26, 26),                        // fixed layer-thickness variation
+                        w0: cellW * random(0.62, 0.88),
+                        h0: cellH * random(0.17, 0.27)
+                    });
+                }
+            }
+            // far layers first, so nearer mirrors slide over them as the view moves
+            mirrors.sort((a, b) => a.z - b.z);
+
+            viewSlider = document.getElementById('viewAngle');
+            orderSlider = document.getElementById('orderAmt');
+            autoBox = document.getElementById('autoOrbit');
+            // taking hold of the swivel stops it walking itself
+            viewSlider.addEventListener('input', () => { autoBox.checked = false; updateLabels(); });
+            orderSlider.addEventListener('input', updateLabels);
+            updateLabels();
+        }
+
+        function updateLabels() {
+            document.getElementById('viewVal').textContent = viewSlider.value + '°';
+            document.getElementById('orderVal').textContent = (orderSlider.value / 100).toFixed(2);
+        }
+
+        // structural colour blue-shifts as you move off-normal: the path through the
+        // layers shortens, so the reinforced wavelength does too. Gold square-on, violet at the edge.
+        function baseHue(absPhi) {
+            return map(absPhi, 0, MAX_VIEW, 46, 268);
+        }
+
+        function currentView() {
+            if (autoBox.checked) {
+                const phi = MAX_VIEW * sin(frameCount * ORBIT_SPEED);
+                viewSlider.value = Math.round(phi * 180 / Math.PI);
+                document.getElementById('viewVal').textContent = viewSlider.value + '°';
+                return phi;
+            }
+            return viewSlider.value * Math.PI / 180;
+        }
+
+        function draw() {
+            background(6, 8, 4);
+
+            const phi = currentView();
+            const order = orderSlider.value / 100;
+
+            const cosPhi = cos(phi), sinPhi = sin(phi);
+            const hueBase = baseHue(abs(phi));
+
+            for (const m of mirrors) {
+                const tau = (m.orderThreshold < order) ? m.tauOrdered : m.tauDisordered;
+
+                // ---- geometry: three consequences a moving lamp cannot produce ----
+                // 1. the whole field foreshortens as it turns away from you
+                // 2. layers at different depths slide laterally against each other (parallax)
+                const sx = CX + (m.x - CX) * cosPhi + m.z * PARALLAX * sinPhi;
+                const sy = m.y;
+                // 3. each mirror presents less of its face the further it is turned from you
+                const faceOn = abs(cos(tau - phi));
+                const w = m.w0 * (0.16 + 0.84 * faceOn);
+
+                // ---- colour: specular only where the mirror bisects lamp and viewer ----
+                // lamp is fixed at azimuth 0, so the bisector of (lamp, viewer) is phi/2
+                const d = tau - phi * 0.5;
+                const specular = pow(max(0, cos(d)), 26);
+
+                // A real iridescent structure sits on a near-black melanin bed, and the first
+                // version rendered it that way — unlit mirrors at brightness 4. But then the only
+                // visible thing is the seam, and the whole point of this piece is that the OBJECT
+                // foreshortens and its layers slide apart as you walk. You cannot perceive a field
+                // compressing if the field is invisible. So the resting bed is lifted well clear of
+                // black: a deliberate departure from the physics, for the geometry's sake.
+                const hueVal = (hueBase + m.hueJitter + 360) % 360;
+                const sat = 14 + specular * 78;
+                const bri = 17 + specular * 82;
+
+                push();
+                translate(sx, sy);
+                rotate(tau);   // drawn angle IS the azimuth field — the order slider reorganises the field itself
+                fill(hueVal, sat, bri);
+                rectMode(CENTER);
+                rect(0, 0, w, m.h0, m.h0 * 0.4);
+                pop();
+            }
+        }
+
+        // measurement hooks — used by the verification pass, not by the piece
+        window.__facet = {
+            setView: (deg) => { autoBox.checked = false; viewSlider.value = deg; updateLabels(); },
+            setOrder: (v) => { orderSlider.value = v; updateLabels(); },
+            // where a given mirror lands on screen, and how wide it is drawn, at the current view
+            probe: (idx) => {
+                const m = mirrors[idx];
+                const phi = viewSlider.value * Math.PI / 180;
+                const order = orderSlider.value / 100;
+                const tau = (m.orderThreshold < order) ? m.tauOrdered : m.tauDisordered;
+                return {
+                    sx: CX + (m.x - CX) * Math.cos(phi) + m.z * PARALLAX * Math.sin(phi),
+                    w: m.w0 * (0.16 + 0.84 * Math.abs(Math.cos(tau - phi))),
+                    z: m.z, tau, x0: m.x
+                };
+            },
+            count: () => mirrors.length,
+            // indices of the deepest and shallowest mirrors, for the parallax test
+            extremes: () => [0, mirrors.length - 1]
+        };
+    </script>
+</body>
+</html>

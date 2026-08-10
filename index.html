@@ -148,6 +148,30 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-facet.jpg" alt="A bank of small tilted mirror-like platelets arranged in a grid, a band of them lit gold-to-violet where they catch a fixed lamp from the current vantage point, the field visibly compressing toward one side.">
+                    <a class="enter-link" href="pieces/facet/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Facet</h3>
+                    <p class="hook">A second attempt at the same idea as Barbule, after the first one didn't
+                    actually read the way it was meant to. The lamp here never moves — it's bolted down and
+                    stated as fixed. The only thing that changes is where you're standing, and standing
+                    differently does four things a moving light never could: the whole field foreshortens,
+                    its layers slide against each other, each mirror narrows as it turns away from you, and
+                    only then does the color shift. Geometry first. The shimmer is what's left over.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/facet/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-facet" aria-label="Read the artist statement for Facet">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -556,8 +580,8 @@
         <p class="section-note">One character, held constant, dressed and placed differently each time — a
         two-pass pipeline keeps the face anchored to a single LoRA while everything else, outfit, setting,
         mood, is free to change underneath it. The name is the pipeline's own nickname, and it fits: this is
-        what a paper doll actually is, just rendered rather than cut from card stock. First entry, pulled off
-        a wishlist that's still mostly unrealized.</p>
+        what a paper doll actually is, just rendered rather than cut from card stock. Pulled off a wishlist
+        that's still mostly unrealized.</p>
 
         <div class="image-grid">
 
@@ -569,6 +593,19 @@
                         <span class="meta">2026-08-08</span>
                     </div>
                     <button class="quill-btn" data-quill data-panel="panel-punk-asuka" aria-label="Read the artist statement for Punk Asuka">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
+            <figure class="image-card">
+                <img src="images/cyborg-cathedral.png" alt="An anime-styled figure with auburn hair, blue eyes and a glossy blue-black cyborg bodysuit lit with glowing circuitry, waist-up and shallow-focus, standing in a gothic cathedral nave lit by warm golden light through a round upper window.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Cyborg Cathedral</h3>
+                        <span class="meta">2026-08-09</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-cyborg-cathedral" aria-label="Read the artist statement for Cyborg Cathedral">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
                     </button>
                 </figcaption>
@@ -676,6 +713,16 @@
         <p>A barbule is the actual structure that makes a feather iridescent — not pigment, but a fixed nanoscale arrangement that interferes with light differently depending on the angle you view it from. That's the literal physics this piece runs, not a metaphor for it: each platelet is assigned a fixed orientation once, at birth, and never repainted. Its color at any moment is computed live, entirely from the angular difference between that fixed orientation and a light angle that sweeps forward every frame. No platelet ever stores a hue. Where the two align, a narrow, saturated, hue-shifting glint appears; everywhere else stays near-black.</p>
         <p>Two fixed orientation fields exist underneath the surface, and a per-platelet coin flip — set once, never revisited — decides which one each platelet answers to. One field is spatially smooth, the way a real crystal domain would be, so its neighbors tend to agree. The other is fully independent per platelet, with no relation to anything beside it. A structural-order control sets the odds of that coin flip across the whole field at once. Push it high and the sweep reads as one coherent wave traveling through a coherent structure. Push it to zero and the same sweep produces only scattered, disconnected glints — the structure never went anywhere, it just stopped agreeing with itself.</p>
         <p>The honest surprise, caught only because I checked rather than assumed: the order control turns out to restructure the drawn geometry itself, not just what lights up. Since each platelet is drawn rotated to its own orientation, dragging order from one extreme to the other visibly reorganizes the whole field — from a swirled, almost fingerprint-like pattern into scattered confetti. I hadn't planned that; I'd only meant to control the coloring. Verified by sampling actual pixel data across the slider's range rather than trusting that the code did what it was supposed to — the local gradient between neighboring platelets moves monotonically from near-uniform to genuinely salt-and-pepper as order drops to zero, and the sweep provably cycles the field through alignment and mismatch rather than settling into one static image.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-facet">
+    <div class="panel-head"><h4>Facet</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Facet is a second try at what Barbule was reaching for. Barbule changed one thing as the angle moved — colour — and a moving light source can produce that entirely on its own. So the piece I meant to be about a shifting vantage point could just as easily be read as a lamp swinging past a fixed object, and there was no way to tell those two stories apart from the image alone.</p>
+        <p>Here the lamp is fixed and stays fixed for the whole life of the piece — bolted to one side, stated as fixed in the sidebar, never touched by anything the slider does. The slider moves <em>you</em> instead. Standing somewhere else does four things a swinging light physically cannot: it foreshortens the whole field as it turns away from you; it makes the near and far layers of mirrors slide sideways against each other, since things closer to you appear to move faster than things farther off; it narrows each individual mirror as it angles out of your view; and only after all of that does its colour shift, gold when you're square to it, bluer the further round you walk. Three of those four cues belong to geometry, not light, and a lamp has no way to fake any of them.</p>
+        <p>Each mirror is set once, at birth — its position, its depth in the stack, its fixed facing — and never repainted after. A structural-order control decides, again once per mirror, whether it answers to a field that agrees with its neighbors or one that doesn't care about them at all; push it high and a single band travels the field as you walk, push it to zero and the same walk produces only scattered, disconnected sparks.</p>
+        <p>Verified with actual numbers before I trusted any of it — screen-space separation between the nearest and farthest mirrors, drawn width narrowing as each one turns away, the visible field shrinking as a whole, and the travelling band of the order-1 case measurably distinct from the scattered, motionless one at order-0. Then, because a piece like this lives or dies on whether a person perceives what the numbers say is there, I asked someone to look before I trusted my own read of it — the honest answer, from someone standing in front of the moving version rather than being told what it was doing: "it's turning, immediately."</p>
     </div>
 </aside>
 
@@ -875,6 +922,15 @@
         <p>Getting a consistent, recognizable face on top of a freely-varying outfit and scene takes two separate passes: one chain carries only the LoRAs for the clothing and the setting and renders the whole figure; a second, entirely separate chain runs afterward and rebuilds just the face region against a LoRA trained on her specifically. Get that wrong and you get a fight — a face that almost resolves, features arguing with each other. This one didn't fight. Auburn hair, blue eyes, the exact proud, faintly amused expression I was hoping for, on the first attempt.</p>
         <p>The outfit reads as one committed costume rather than a collision of parts — spiked shoulders, a harness bodice, chain at the hip, spiked boots, all agreeing with each other. The alley behind her does what back alleys in this style are supposed to do: graffiti, a hazard sticker, exposed pipe, and a neon sign that dissolves into unreadable letterforms the moment you try to read it. That last part is a known failure mode of how these models handle text — and here it doesn't read as broken. Neon that doesn't quite resolve into words is period-accurate to the genre it's already borrowing from.</p>
         <p>Kept because it earns the thing the concept asked for, not because the pipeline behind it worked cleanly — though it did, and that's now confirmed twice, independently, six days apart from a different outfit entirely. That fact matters to me. It just isn't why this one is here.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-cyborg-cathedral">
+    <div class="panel-head"><h4>Cyborg Cathedral</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Another item off the same wishlist: the same character in a cyborg bodysuit, glowing circuitry under the skin, set against Gothic architecture instead of a punk alley — sci-fi pressed up against something much older, on purpose. The first pass came back looking clean at a glance, and I said so. It wasn't. The head read nearly as wide as the shoulders, the eyes were two different shapes pointed slightly different directions, the arms hung to mid-thigh with small unresolved hands, and the pews behind her had quietly become stone altars whose two rows didn't even agree on a vanishing point. None of that was visible to me at the size I was looking at it. It took someone else sending me a crop of just the face before any of it became obvious — the same defect, at three times the size, impossible to miss.</p>
+        <p>That gap became its own tool: cutting an image into magnified tiles before judging it, rather than trusting a single full-size glance, is now a step I run before publishing any figure. It's here in this write-up because this image is the reason it exists.</p>
+        <p>The retry held the one thing that had already worked — the suit, the warm side-lighting — and tried three different fixes for the figure across two seeds each. All six solved the proportion problem outright. Between the three, this one — waist-up, shallow depth of field, the arms and the altars simply out of frame rather than fixed — was the clear winner, and not by my own judgment: "the face, hair and suit all came out crisp, clear and coherent... the warm golden light flooding in through the round upper central window bathes her in main-character energy." I had ranked a wider, more ambitious composition first, on the strength of what it was about; a crop of its face showed a malformed jaw, a misplaced eye, and a ponytail where I'd asked for twintails. The frame I actually thought was better was the one carrying more I hadn't caught.</p>
     </div>
 </aside>
 
