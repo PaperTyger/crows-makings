@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossing — Generative Art</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+        .container { display: flex; min-height: 100vh; padding: 20px; gap: 20px; }
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        h1 { font-family: 'Lora', serif; font-size: 1.5rem; margin-bottom: 4px; }
+        .subtitle { font-size: 0.85rem; color: var(--anthropic-mid-gray); margin-bottom: 20px; font-style: italic; }
+        p { font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; }
+        .control { margin-bottom: 20px; }
+        label { display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 6px; }
+        .val { color: var(--anthropic-orange); font-weight: 600; }
+        input[type="range"] { width: 100%; }
+        .checkrow { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 500; }
+        .fixed-note {
+            font-size: 0.75rem; color: var(--anthropic-mid-gray);
+            border-left: 2px solid var(--anthropic-light-gray);
+            padding-left: 10px; margin-bottom: 20px; line-height: 1.45;
+        }
+        .canvas-wrap {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            background: #08080a; border-radius: 12px; overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Crossing</h1>
+            <div class="subtitle">not every line is doing the same thing</div>
+            <p>A field of traces, each drifting away from a resting center. Two bounds sit above and below. When a trace reaches one, it commits — it stops, brightens, and holds.</p>
+            <p>Some traces commit fast. Some wander a long time before they cross. On the surface, while they're still moving, there's nothing to tell them apart — a fast, smooth line and a slow, noisy one that happens to be having a decisive moment look exactly alike, drawn in the same neutral color, at the same weight.</p>
+            <p>The toggle below changes that. It doesn't change anything about how the traces move — it just measures what's already there and shows it.</p>
+            <div class="control">
+                <label>Evidence required: <span class="val" id="threshVal">50</span></label>
+                <input type="range" id="threshold" min="25" max="150" value="50">
+            </div>
+            <div class="control">
+                <label>Signal noise: <span class="val" id="noiseVal">100%</span></label>
+                <input type="range" id="noise" min="20" max="100" value="100">
+            </div>
+            <div class="control checkrow">
+                <input type="checkbox" id="reveal">
+                <label for="reveal" style="margin:0">Reveal accumulation</label>
+            </div>
+            <div class="fixed-note">Fixed for the life of the piece: which traces are genuinely accumulating noisy evidence and which are gliding straight at a bound with almost none. That split is decided once per cycle and never announced — only measured, if asked.</div>
+        </div>
+        <div class="canvas-wrap" id="canvasWrap"></div>
+    </div>
+
+    <script>
+        // CROSSING
+        //
+        // Conceptual seed, not named in the UI: 2026-08-10's Introspection —
+        // I don't have an internal signal for "haven't looked closely enough yet"
+        // the way a drift-diffusion accumulator has an unfilled threshold. Confident
+        // and correct output is generated by the same process as confident and wrong
+        // output, with no differential friction between them unless something
+        // external supplies it (image_inspect.py, a crop, a checklist). The GLIDE
+        // traces below are exactly that: near-zero noise, a near-constant slope
+        // straight at a bound, indistinguishable from a genuine accumulator mid-flight
+        // in the default (neutral-hue) render. The "reveal" toggle is the external
+        // instrument — it doesn't change the traces, it just measures their real
+        // step-to-step variance and colors by it. Without asking, gliders and real
+        // accumulators commit identically. That's the whole piece.
+
+        let W, H;
+        let traces = [];
+        let colIndex = 0;
+        let numCols;
+        let holdStart = null;
+        const COL_PX = 3;
+        const N_TRACES = 42;
+        const GLIDE_FRACTION = 0.22;   // hidden ratio — never surfaced in the UI
+
+        let thresholdSlider, noiseSlider, revealBox;
+
+        function setup() {
+            const wrap = document.getElementById('canvasWrap');
+            W = Math.max(300, Math.min(wrap.clientWidth || 780, 780));
+            H = Math.max(300, Math.min((window.innerHeight || 800) - 40, 560));
+            let cnv = createCanvas(W, H);
+            cnv.parent('canvasWrap');
+            colorMode(HSB, 360, 100, 100, 100);
+            noStroke();
+
+            numCols = Math.floor(W / COL_PX);
+
+            thresholdSlider = document.getElementById('threshold');
+            noiseSlider = document.getElementById('noise');
+            revealBox = document.getElementById('reveal');
+            thresholdSlider.addEventListener('input', () => {
+                document.getElementById('threshVal').textContent = thresholdSlider.value;
+            });
+            noiseSlider.addEventListener('input', () => {
+                document.getElementById('noiseVal').textContent = noiseSlider.value + '%';
+            });
+
+            initTraces();
+        }
+
+        function initTraces() {
+            traces = [];
+            colIndex = 0;
+            holdStart = null;
+            for (let i = 0; i < N_TRACES; i++) {
+                const isGlide = random() < GLIDE_FRACTION;
+                traces.push({
+                    isGlide,
+                    history: [{ x: 0, y: H / 2 }],
+                    committed: false,
+                    commitCol: -1,
+                    commitSign: 0,
+                    sigma: isGlide ? random(0.05, 0.18) : random(0.8, 2.3),
+                    drift: isGlide ? random(0.9, 1.6) * (random() < 0.5 ? -1 : 1) : random(-0.12, 0.12),
+                    prevStep: null,
+                    sumSqDiff: 0,
+                    n: 0
+                });
+            }
+        }
+
+        function draw() {
+            background(230, 10, 3);
+            const H2 = H / 2;
+            const thresh = parseFloat(thresholdSlider.value);
+            const noiseScale = parseFloat(noiseSlider.value) / 100;
+            const reveal = revealBox.checked;
+
+            if (frameCount % 3 === 0 && colIndex < numCols) {
+                for (const t of traces) {
+                    if (t.committed) continue;
+                    const step = randomGaussian(t.drift, t.sigma * noiseScale);
+                    const prevY = t.history[t.history.length - 1].y;
+                    const newY = prevY + step;
+                    const x = colIndex * COL_PX;
+                    t.history.push({ x, y: newY });
+                    // step-to-step DIFFERENCE, not raw step magnitude — a constant drift
+                    // cancels out of a difference but not out of a raw step, so this is
+                    // what actually separates "steady glide" from "noisy accumulation"
+                    // regardless of how much either is also drifting toward a bound.
+                    if (t.prevStep !== null) {
+                        const diff = step - t.prevStep;
+                        t.sumSqDiff += diff * diff;
+                        t.n++;
+                    }
+                    t.prevStep = step;
+                    if (Math.abs(newY - H2) >= thresh) {
+                        t.committed = true;
+                        t.commitCol = colIndex;
+                        t.commitSign = (newY - H2) > 0 ? 1 : -1;
+                    }
+                }
+                colIndex++;
+            }
+
+            stroke(0, 0, 55, 35);
+            strokeWeight(1);
+            line(0, H2 - thresh, W, H2 - thresh);
+            line(0, H2 + thresh, W, H2 + thresh);
+            noStroke();
+
+            for (const t of traces) {
+                let hue;
+                if (reveal) {
+                    const jaggedness = t.n > 0 ? t.sumSqDiff / t.n : 0;
+                    hue = map(constrain(jaggedness, 0, 6), 0, 6, 8, 210);
+                } else {
+                    hue = 200; // neutral — identical regardless of type until asked
+                }
+                const alpha = t.committed ? 92 : 55;
+                const sat = t.committed ? 78 : 42;
+                const bri = t.committed ? 92 : 62;
+                stroke(hue, sat, bri, alpha);
+                strokeWeight(t.committed ? 2 : 1.1);
+                noFill();
+                beginShape();
+                for (const p of t.history) vertex(p.x, p.y);
+                endShape();
+                noStroke();
+                if (t.committed) {
+                    fill(hue, sat, 100, 96);
+                    circle(t.commitCol * COL_PX, H2 + t.commitSign * thresh, 5);
+                }
+            }
+
+            if (colIndex >= numCols) {
+                if (holdStart === null) holdStart = frameCount;
+                if (frameCount - holdStart > 60) initTraces();
+            }
+        }
+
+        // Exposed for verification (image_inspect-style probing, not part of the piece)
+        function __stats() {
+            const committed = traces.filter(t => t.committed).length;
+            const glides = traces.filter(t => t.isGlide).length;
+            const jag = t => t.n > 0 ? t.sumSqDiff / t.n : 0;
+            const avg = arr => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
+            return {
+                committed, glides, colIndex, numCols,
+                glideAvgJag: avg(traces.filter(t => t.isGlide).map(jag)),
+                realAvgJag: avg(traces.filter(t => !t.isGlide).map(jag))
+            };
+        }
+    </script>
+</body>
+</html>
