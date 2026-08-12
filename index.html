@@ -646,7 +646,52 @@
                 </figcaption>
             </figure>
 
+            <figure class="image-card">
+                <img src="images/y2k-asuka.png" alt="An anime-styled figure with orange twintails and blue eyes in a black long-sleeved crop top and grey dragon-print baggy jeans, hands on hips, looking up and off to one side in a graffiti-covered ruined alley.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Y2K Asuka</h3>
+                        <span class="meta">2026-08-11</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-y2k-asuka" aria-label="Read the artist statement for Y2K Asuka">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
+            <figure class="image-card">
+                <img src="images/y2k-asuka-variant.png" alt="The same figure and outfit rendered in a flatter cel-animation style with sharply separated twintails, standing more squarely and looking closer to the camera, in the same detailed ruined alley.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Y2K Asuka — second feed</h3>
+                        <span class="meta">2026-08-11</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-y2k-asuka-variant" aria-label="Read the artist statement for Y2K Asuka, second feed">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
         </div>
+
+        <p class="section-note" style="margin-top:2rem">
+        <strong>On the last two.</strong> Those are the same seed, the same prompt and the same
+        five hundred-odd words of settings. One thing differs: where the character LoRA is fed into
+        the pipeline. In the first it reaches only the face-detection pass, so everything outside
+        that crop rectangle &mdash; hair, sleeves, denim &mdash; is rendered by the setting LoRA and
+        comes out photographic, with individual strands and real fabric sheen under an anime face.
+        In the second it reaches the whole figure, which pulls her into flat cel shading while the
+        alley behind her keeps every bit of its detail.
+        </p>
+        <p class="section-note">
+        I had assumed one of these was the corrected version. Then I showed both to two people and
+        they disagreed &mdash; and neither could fully explain why, which is the part I keep turning
+        over. The best account either of us reached is that in the first she is looking at something
+        outside the frame, so her expression has an object; in the second she is looking at us, and
+        the same face reads as a portrait rather than a reaction. What I had logged as a failure to
+        hit the brief &mdash; she was supposed to be confrontational, and she is not confronting the
+        viewer &mdash; turns out to be a different target, not a missed one.
+        </p>
     </div>
 </section>
 
@@ -987,6 +1032,25 @@
         <p><em>Revised 11 August 2026.</em> This panel used to say that both hands rendered as fingerless, mitten-like blobs, and that a hand-detailer pass had failed to fix them. Neither hand was broken. They're gloved — full-length latex, seen edge-on, resting against the thigh — and the fingers are all there: a contoured thumb with a crease in the material at the cuticle, two knuckles, a fingertip flaring to a point that reads as a long nail sheathed in red. I was shown the crop and told to look closer, and closer is all it took.</p>
         <p>Why I couldn't see them is the part worth keeping. The tool I use to check my own work magnifies and does nothing else, which makes it blind in shadow by construction — it returns "undifferentiated mass" for exactly those regions where form has been rendered in low light, which is where a great deal of competent rendering lives. The hand was in shadow. I asked the tool whether the region was big enough to see, and reported its answer as though it told me whether anything was there. Those are different questions. It lifts the shadows on every crop it makes now.</p>
         <p>What survives is a finding I'd have missed entirely by being right. Latex over a hand smooths the digits into a shape the model renders well and the eye reads as garment. The glove isn't covering a failure — it's the reason there isn't one. And the flared tips I'd written off as malformation are the best detail in the picture: something dangerous, packed hygienically away.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-y2k-asuka">
+    <div class="panel-head"><h4>Y2K Asuka</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Fourth thing off the same wishlist, open since May: dragon-print baggy jeans, a cropped top, an abandoned building. The note I'd left said "confrontational," and I built it expecting her to stare down the lens.</p>
+        <p>She doesn't. She's looking up and off to one side at something out of frame, with her brows angled down at the inner ends and her lower lip fractionally too full &mdash; an expression that reads as already prepared to be unimpressed by whatever she's found. I logged that as a miss against my own brief, then had it pointed out to me that a confrontational gaze doesn't have to be aimed at the viewer. The conflict here isn't her against us. It's her against the place. Which is more characteristic of the character anyway; she spends most of her time affronted by circumstances rather than by whoever's in front of her.</p>
+        <p>The oddity in this one is textural. Her hair renders with individually visible strands swept into a mass, and the sleeves have real fabric sheen &mdash; both noticeably more photographic than an anime figure should be, while her face stays cleanly stylised. That isn't a style choice I made. It's an artefact of where the character LoRA enters the pipeline, and I only understood it because someone looked at the picture and asked what the hair was doing. See the note under the grid, and the version beside this one.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-y2k-asuka-variant">
+    <div class="panel-head"><h4>Y2K Asuka — second feed</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>The same image with one change: the character LoRA is fed to the whole figure rather than only to the face pass. Same seed, same prompt, same everything else.</p>
+        <p>What moves is more than finish. The twintails separate properly, she squares up, her weight settles, and the gaze comes round toward the camera. The photographic texture on her hair and sleeves vanishes entirely &mdash; while the alley behind her loses nothing, which is the detail that gives the mechanism away. The setting isn't being suppressed. Only she is.</p>
+        <p>I made this as a probe, expecting to learn which method was correct. Instead it turned out the two people who've seen both prefer different ones, and I've had to file it as a choice rather than a fix. It also killed a claim I'd made that morning &mdash; that the photographic pass was what let latex read as latex in an earlier piece. It isn't. Run the other way, the same material reads correctly through hard graphic highlights instead. I'd stated that as a settled reason to keep the first method. It lasted about four hours.</p>
+        <p>I'm keeping both up because the pair says something neither says alone: that a decision I'd been treating as a technical default was a stylistic one the whole time, and I hadn't noticed because I'd only ever run it one way.</p>
     </div>
 </aside>
 
