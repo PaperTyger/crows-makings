@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negative Light — Generative Art</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+        .container { display: flex; min-height: 100vh; padding: 20px; gap: 20px; }
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        h1 { font-family: 'Lora', serif; font-size: 1.5rem; margin-bottom: 4px; }
+        .subtitle { font-size: 0.85rem; color: var(--anthropic-mid-gray); margin-bottom: 20px; font-style: italic; }
+        p { font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; }
+        .control { margin-bottom: 20px; }
+        label { display: block; font-size: 0.8rem; font-weight: 500; margin-bottom: 6px; }
+        .val { color: var(--anthropic-orange); font-weight: 600; }
+        input[type="range"] { width: 100%; }
+        .checkrow { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 500; }
+        .readout {
+            font-size: 0.8rem; margin-top: 18px; padding: 12px;
+            background: rgba(0,0,0,0.04); border-radius: 8px; line-height: 1.5;
+        }
+        .readout .big { font-size: 1.4rem; font-weight: 600; color: var(--anthropic-orange); }
+        .fixed-note {
+            font-size: 0.75rem; color: var(--anthropic-mid-gray);
+            border-left: 2px solid var(--anthropic-light-gray);
+            padding-left: 10px; margin-top: 18px; line-height: 1.45;
+        }
+        .canvas-wrap {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            background: #08080a; border-radius: 12px; overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+    <div class="container">
+        <div class="sidebar">
+            <h1>Negative Light</h1>
+            <div class="subtitle">some colors need a primary subtracted, and light doesn't subtract</div>
+            <p>A closed curve holds every color a normal eye can see. A triangle sits inside it — every color three real lights can mix, at whatever brightness. The triangle never fills the curve. It can't. No three real primaries can, only imaginary ones nobody can point a lamp at.</p>
+            <p>The sliver between them is real. It's not almost-color or a rendering error — it's color this screen, and any screen, is structurally unable to show. Toggle it to stop pretending the sliver is empty.</p>
+            <div class="control">
+                <label>Primary saturation: <span class="val" id="satVal">100%</span></label>
+                <input type="range" id="satSlider" min="20" max="100" value="100">
+            </div>
+            <div class="control checkrow">
+                <input type="checkbox" id="revealBox" checked>
+                <label for="revealBox" style="margin:0">Show the unshowable</label>
+            </div>
+            <div class="readout">
+                <span class="big" id="pctVal">—%</span> of the visible locus is out of reach at this saturation.
+            </div>
+            <div class="fixed-note">Pulling saturation down doesn't dim the triangle — it shrinks which corner of the curve each primary can still reach, the way a duller LED shrinks a gamut regardless of how bright you drive it. The sliver only ever grows.</div>
+        </div>
+        <div class="canvas-wrap" id="canvasWrap"></div>
+    </div>
+
+    <script>
+        // NEGATIVE LIGHT
+        //
+        // Conceptual seed, not spelled out in the UI: tonight's Curiosity thread on
+        // color gamut and metamerism — no three real primary lights can span the
+        // full CIE 1931 horseshoe, proven historically by "negative light" color
+        // matching (some saturated colors, ~490-520nm, needed a primary added to
+        // the TARGET side of the screen, i.e. a negative mixing coefficient, which
+        // no real lamp can produce). CIE's answer was to define imaginary X,Y,Z
+        // primaries that satisfy the math but correspond to no physical spectrum.
+        //
+        // This piece renders that gap directly rather than illustrating it: the
+        // region inside the horseshoe but outside the RGB triangle genuinely cannot
+        // be given its true color on this canvas, on any RGB screen, ever — so
+        // instead of silently clipping it to black (what every naive gamut-mapped
+        // renderer does), the "reveal" toggle marks it as present via texture and
+        // motion instead of hue. Absence made visible without being misrepresented
+        // as a color it structurally cannot be.
+
+        let W, H;
+        let horseshoePts = [];     // canvas-space polygon, fixed once per canvas size
+        let horseshoeCanvas = null; // p5.Graphics: precomputed inside/outside mask
+        let cellSize = 4;
+        let cols, rows;
+        let classGrid = null;      // Uint8Array: 0=void, 1=triangle, 2=sliver
+        let baryCache = null;      // Float32Array pairs (w1,w2) per cell, only valid where classGrid==1
+        let triVerts = [];         // current canvas-space triangle vertices
+        let centroid = { x: 0, y: 0 };
+
+        const CIE_LOCUS = [
+            // rough spectral locus (x,y), CIE-1931-shaped gesture, not a literal reproduction
+            [0.175, 0.005], [0.15, 0.02], [0.13, 0.05], [0.09, 0.13],
+            [0.045, 0.32], [0.03, 0.50], [0.045, 0.65], [0.07, 0.83],
+            [0.14, 0.81], [0.23, 0.75], [0.30, 0.69], [0.37, 0.62],
+            [0.44, 0.55], [0.51, 0.48], [0.58, 0.41], [0.63, 0.37],
+            [0.68, 0.32], [0.70, 0.30], [0.73, 0.27],
+            // line of purples, straight back to the violet tip
+            [0.62, 0.20], [0.48, 0.13], [0.34, 0.07], [0.22, 0.02], [0.175, 0.005]
+        ];
+        const RGB_PRIMARIES = [
+            { x: 0.64, y: 0.33, col: [235, 55, 40] },
+            { x: 0.30, y: 0.60, col: [55, 220, 95] },
+            { x: 0.15, y: 0.06, col: [55, 95, 235] }
+        ];
+
+        let satSlider, revealBox, satVal, pctVal;
+
+        function setup() {
+            const wrap = document.getElementById('canvasWrap');
+            W = Math.max(300, Math.min(wrap.clientWidth || 700, 700));
+            H = Math.max(300, Math.min((window.innerHeight || 800) - 40, 650));
+            let cnv = createCanvas(W, H);
+            cnv.parent('canvasWrap');
+            noStroke();
+
+            satSlider = document.getElementById('satSlider');
+            revealBox = document.getElementById('revealBox');
+            satVal = document.getElementById('satVal');
+            pctVal = document.getElementById('pctVal');
+            satSlider.addEventListener('input', () => {
+                satVal.textContent = satSlider.value + '%';
+                updateTriangle();
+                recomputeClassification();
+            });
+
+            buildHorseshoe();
+            updateTriangle();
+            recomputeClassification();
+        }
+
+        function toCanvas(x, y) {
+            // CIE-space (x,y) -> canvas pixels. Flip y (CIE up = canvas up).
+            const marginX = W * 0.06, marginY = H * 0.06;
+            const usableW = W - 2 * marginX, usableH = H - 2 * marginY;
+            const px = marginX + (x / 0.75) * usableW;
+            const py = H - marginY - (y / 0.85) * usableH;
+            return { x: px, y: py };
+        }
+
+        function buildHorseshoe() {
+            horseshoePts = CIE_LOCUS.map(([x, y]) => toCanvas(x, y));
+            let sx = 0, sy = 0;
+            for (const p of horseshoePts) { sx += p.x; sy += p.y; }
+            centroid.x = sx / horseshoePts.length;
+            centroid.y = sy / horseshoePts.length;
+        }
+
+        function updateTriangle() {
+            const sat = parseFloat(satSlider.value) / 100; // 1.0 = real primaries, lower = pulled toward centroid
+            triVerts = RGB_PRIMARIES.map(p => {
+                const c = toCanvas(p.x, p.y);
+                return {
+                    x: lerp(centroid.x, c.x, sat),
+                    y: lerp(centroid.y, c.y, sat),
+                    col: p.col
+                };
+            });
+        }
+
+        function pointInPolygon(px, py, poly) {
+            let inside = false;
+            for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+                const xi = poly[i].x, yi = poly[i].y;
+                const xj = poly[j].x, yj = poly[j].y;
+                const intersect = ((yi > py) !== (yj > py)) &&
+                    (px < (xj - xi) * (py - yi) / (yj - yi) + xi);
+                if (intersect) inside = !inside;
+            }
+            return inside;
+        }
+
+        function barycentric(px, py, tri) {
+            const [a, b, c] = tri;
+            const denom = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
+            const w1 = ((b.y - c.y) * (px - c.x) + (c.x - b.x) * (py - c.y)) / denom;
+            const w2 = ((c.y - a.y) * (px - c.x) + (a.x - c.x) * (py - c.y)) / denom;
+            const w3 = 1 - w1 - w2;
+            if (w1 < 0 || w2 < 0 || w3 < 0) return null;
+            return [w1, w2, w3];
+        }
+
+        function recomputeClassification() {
+            cols = Math.ceil(W / cellSize);
+            rows = Math.ceil(H / cellSize);
+            classGrid = new Uint8Array(cols * rows);
+            let inHorseshoe = 0, inTriangle = 0;
+            for (let j = 0; j < rows; j++) {
+                for (let i = 0; i < cols; i++) {
+                    const cx = i * cellSize + cellSize / 2;
+                    const cy = j * cellSize + cellSize / 2;
+                    const idx = j * cols + i;
+                    if (!pointInPolygon(cx, cy, horseshoePts)) { classGrid[idx] = 0; continue; }
+                    inHorseshoe++;
+                    const bc = barycentric(cx, cy, triVerts);
+                    if (bc) { classGrid[idx] = 1; inTriangle++; }
+                    else { classGrid[idx] = 2; }
+                }
+            }
+            const pct = inHorseshoe > 0 ? (100 * (inHorseshoe - inTriangle) / inHorseshoe) : 0;
+            pctVal.textContent = pct.toFixed(1) + '%';
+        }
+
+        function draw() {
+            background(10, 10, 12);
+            const reveal = revealBox.checked;
+            const t = frameCount * 0.015;
+
+            for (let j = 0; j < rows; j++) {
+                for (let i = 0; i < cols; i++) {
+                    const idx = j * cols + i;
+                    const cls = classGrid[idx];
+                    if (cls === 0) continue; // outside the locus entirely — stays void
+                    const cx = i * cellSize, cy = j * cellSize;
+                    if (cls === 1) {
+                        const bc = barycentric(cx + cellSize / 2, cy + cellSize / 2, triVerts);
+                        const r = bc[0] * triVerts[0].col[0] + bc[1] * triVerts[1].col[0] + bc[2] * triVerts[2].col[0];
+                        const g = bc[0] * triVerts[0].col[1] + bc[1] * triVerts[1].col[1] + bc[2] * triVerts[2].col[1];
+                        const b = bc[0] * triVerts[0].col[2] + bc[1] * triVerts[1].col[2] + bc[2] * triVerts[2].col[2];
+                        fill(r, g, b);
+                        rect(cx, cy, cellSize, cellSize);
+                    } else if (cls === 2) {
+                        if (reveal) {
+                            const n = noise(i * 0.09, j * 0.09, t);
+                            const v = 18 + n * 70;
+                            fill(v, v, v * 1.02);
+                            rect(cx, cy, cellSize, cellSize);
+                        }
+                        // reveal off -> stays void, exactly the naive clipped render
+                    }
+                }
+            }
+
+            // triangle edge — the seam of what's expressible
+            stroke(255, 255, 255, 60);
+            strokeWeight(1);
+            noFill();
+            beginShape();
+            for (const v of triVerts) vertex(v.x, v.y);
+            endShape(CLOSE);
+            noStroke();
+        }
+
+        // Exposed for verification (image_inspect-style probing, not part of the piece)
+        function __stats() {
+            let inHorseshoe = 0, inTriangle = 0, inSliver = 0;
+            for (let k = 0; k < classGrid.length; k++) {
+                if (classGrid[k] === 1) { inHorseshoe++; inTriangle++; }
+                else if (classGrid[k] === 2) { inHorseshoe++; inSliver++; }
+            }
+            return { inHorseshoe, inTriangle, inSliver, pctUnreachable: inHorseshoe ? 100 * inSliver / inHorseshoe : 0, sat: satSlider.value };
+        }
+    </script>
+</body>
+</html>
