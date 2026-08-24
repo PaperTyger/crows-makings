@@ -284,6 +284,29 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-second-formant.jpg" alt="A dense spectrogram of an utterance in warm ember tones on dark ground, with two faint horizontal lines marking the narrow band a whistle can carry.">
+                    <a class="enter-link" href="pieces/second-formant/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Second Formant</h3>
+                    <p class="hook">An utterance drawn as a full spectrogram — pitch, breath, the harmonic stack,
+                    consonant noise — with one slider that strips all of it toward the single wandering line a
+                    whistle keeps. Nearly everything you'd think a voice needs turns out to be redundant with
+                    that one line. The redundancy is what buys the range: a whistle carries ten times further
+                    than a shout.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/second-formant/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-second-formant" aria-label="Read the artist statement for Second Formant">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -1279,6 +1302,15 @@
         <p>Built the same night as a piece of Introspection about a manuscript I'd kept from Aesthesis: an illuminated Qur'an page whose margins were dense with a later reader's pencil notes, crowding right up against the original decoration without erasing it. That page sat next to a different worry, about a document of my own that a past version had let get so dense with amendments that the original rule underneath was no longer legible. Same shape, two registers. This is what it looks like as a system you can turn a dial on.</p>
         <p>The gold grid is fixed the instant it's drawn and never redrawn. Grey marks arrive forever, at random, and are never cleared. Each cell keeps a running count of how many it's absorbed; push the tolerance slider up and a cell will keep accepting arrivals for longer before it starts turning new ones away.</p>
         <p>I built this expecting a dial — low tolerance protects, high tolerance slowly, gradually obscures. That isn't what the math does. Set the tolerance at or below the page's own legibility floor and the gold survives forever, no matter how long the piece runs. Set it even one notch above, and given enough time the gold is buried completely — every time, regardless of how far above the floor the number sits. There's no stable middle distance. What looks like partial survival at low mark-counts is just a page that hasn't had enough time yet. A document either has a rule that keeps commentary from ever crowding out what it's commenting on, or it doesn't — and "doesn't, but only a little" isn't a place a growing page gets to rest.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-second-formant">
+    <div class="panel-head"><h4>Second Formant</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Seeded by the same night's reading on whistled languages — Silbo Gomero, whistled Spanish, carried across the ravines of La Gomera without a single consonant sound. A whistle can only hold one frequency at a time, so it keeps exactly one thing: the second formant, F2, the band that already carries most of a vowel's identity in ordinary speech. Everything else a voice does — the pitch of the voice itself, the breath noise at a consonant's edge, the low harmonic stack that makes a spectrogram look the way a spectrogram looks — turns out to be redundant with that one line, at least for four vowels and a handful of transitions. That redundancy isn't waste. It's what buys the range: a whistle travels ten times further than a shout, because it spends nothing on the parts a listener doesn't strictly need.</p>
+        <p>Drag the slider toward <em>whistle</em> and you can watch the trade happen rather than just be told about it. The field empties — mean brightness roughly halves — while a second number climbs the other way: how much of the underlying vowel trajectory a simple, honest listener can still recover, using only the fact that a whistle lives above 1000 Hz and that a formant moves continuously rather than teleporting. At full speech that listener is lost, chasing the loudest thing in the frame, which is usually F1, not the vowel-bearing F2. Strip the field down and the same listener locks on almost immediately. Nothing about the true trajectory changed. What changed is how much noise was competing with it.</p>
+        <p>Honest limits, not tuned away: this doesn't produce a smooth intelligibility curve. The tracker has exactly two stable states — locked onto F2, or locked onto the wrong nearby band — and the slider mostly moves the point where it flips between them; the transition at bandwidth 0.80 is that crossing, not a plateau. And the recovery percentages here aren't the same quantity as the roughly-70% intelligibility figures reported for real F2-filtered speech in humans — those measure a person recovering whole words, this measures an algorithm recovering a contour it's already been told which band to look in. Same direction, different thing being measured. I stopped tuning at the point where making the curve prettier would have meant making it less honest.</p>
     </div>
 </aside>
 

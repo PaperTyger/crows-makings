@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Formant — Generative Art</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0c0c0b;
+            min-height: 100vh;
+            color: var(--anthropic-light);
+        }
+        .container { display: flex; min-height: 100vh; padding: 20px; gap: 20px; flex-wrap: wrap; }
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+        .stage { flex: 1; min-width: 320px; display: flex; align-items: flex-start; justify-content: center; }
+        #canvas-holder { max-width: 100%; overflow-x: auto; border-radius: 10px; }
+        canvas { display: block; border-radius: 10px; max-width: 100%; height: auto; }
+        h1 { font-size: 1.15rem; font-weight: 600; margin-bottom: 6px; }
+        .subtitle { font-family: 'Lora', serif; font-style: italic; color: var(--anthropic-mid-gray); font-size: 0.85rem; margin-bottom: 20px; line-height: 1.45; }
+        label { display: block; font-size: 0.8rem; color: var(--anthropic-mid-gray); margin-bottom: 6px; margin-top: 18px; }
+        input[type=range] { width: 100%; accent-color: var(--anthropic-orange); }
+        input[type=number] { width: 100%; padding: 6px 8px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; color: var(--anthropic-light); font-family: inherit; }
+        button { margin-top: 14px; width: 100%; padding: 9px; background: rgba(217,119,87,0.18); border: 1px solid rgba(217,119,87,0.5); color: var(--anthropic-light); border-radius: 7px; font-family: inherit; font-size: 0.82rem; cursor: pointer; }
+        button:hover { background: rgba(217,119,87,0.3); }
+        .readout { margin-top: 22px; padding: 14px; background: rgba(255,255,255,0.03); border-radius: 8px; font-size: 0.82rem; line-height: 1.85; }
+        .readout .row { display: flex; justify-content: space-between; gap: 10px; }
+        .readout .k { color: var(--anthropic-mid-gray); }
+        .readout .v { font-variant-numeric: tabular-nums; }
+        .note { margin-top: 20px; font-family: 'Lora', serif; font-size: 0.82rem; line-height: 1.6; color: var(--anthropic-mid-gray); }
+        .note strong { color: var(--anthropic-light-gray); font-weight: 500; }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+<div class="container">
+    <div class="sidebar">
+        <h1>Second Formant</h1>
+        <div class="subtitle">An utterance, drawn as a spectrogram, collapsing toward the one band a whistle keeps.</div>
+
+        <label for="bandwidth">Bandwidth — speech <span style="float:right">whistle</span></label>
+        <input type="range" id="bandwidth" min="0" max="1" step="0.01" value="1">
+
+        <label for="seed">Utterance seed</label>
+        <input type="number" id="seed" value="20260822">
+        <button id="newUtterance">New utterance</button>
+
+        <div class="readout">
+            <div class="row"><span class="k">bandwidth</span><span class="v" id="r-bandwidth">1.00</span></div>
+            <div class="row"><span class="k">signal transmitted</span><span class="v" id="r-energy">100%</span></div>
+            <div class="row"><span class="k">contour recovered</span><span class="v" id="r-recov">—</span></div>
+            <div class="row"><span class="k">tracking error</span><span class="v" id="r-err">—</span></div>
+            <div class="row"><span class="k">components</span><span class="v" id="r-components">—</span></div>
+        </div>
+
+        <div class="note">
+            The two faint horizontals mark <strong>1000–3000 Hz</strong>, the window a whistle
+            occupies. Everything outside it — the fundamental and its harmonic stack — is
+            what whistling cannot carry at all.
+            <br><br>
+            Drag toward <strong>whistle</strong> and most of the picture leaves. What stays is
+            a single sinuous line moving between four loci, the way whistled Spanish carries
+            its vowels; consonants are in the <em>transitions</em> — the abrupt jumps and the
+            interruptions — not in any band of their own.
+            <br><br>
+            <strong>The trade is the piece.</strong> Roughly 93% of the transmitted signal is
+            discarded, and the trajectory survives it. That redundancy is what buys the range:
+            a whistle carries ten times further than a shout.
+        </div>
+    </div>
+    <div class="stage"><div id="canvas-holder"></div></div>
+</div>
+
+<script src="formant-logic.js"></script>
+<script src="sketch.js"></script>
+</body>
+</html>
