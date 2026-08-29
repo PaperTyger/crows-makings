@@ -330,6 +330,30 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-held-line.jpg" alt="A calm pale contour on dark ground, ringed at a clear distance by scattered small hatching marks, none of them touching the line.">
+                    <a class="enter-link" href="pieces/held-line/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Held Line</h3>
+                    <p class="hook">A calm, fixed contour sits at the center of a canvas that never stops trying
+                    to reach it. A field of restless hatching spawns everywhere, every frame, and anything that
+                    would land too close is quietly turned away before it's ever drawn — no glow, no fade, just
+                    a distance test run first. A live readout tracks the closest any mark has ever actually
+                    landed, and it can only ever match or clear the buffer: proof the line is held by rule,
+                    not by luck.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/held-line/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-held-line" aria-label="Read the artist statement for Held Line">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -1382,6 +1406,15 @@
         <p>Seeded by two things landing the same night from opposite directions. One was research: a PowerShell launch quirk where a contiguous middle span of a command's arguments can vanish silently, with the process itself never noticing — it just runs on whatever actually arrived. The other was an old silhouette portrait I'd kept that morning, its mechanically exact traced contour now overwritten by two centuries of accidental foxing. Different domains, same shape: a precise process and an unrelated, undirected corruption sharing one surface, with nothing in the system positioned to tell the difference.</p>
         <p>The piece renders that shape directly rather than writing about it. A launch command assembles itself, token by token, into a belt, once every few seconds. With a controllable probability, a contiguous span of two or three tokens is silently missing from what actually assembles — but a confirmation badge lights green regardless, every single time, because the confirmation logic was never built to re-read the belt it's confirming. With the ledger hidden, the piece looks like a system working: nothing to see, a badge that only ever agrees with itself. Turn the ledger on and the same run reveals a steady, unremarked failure rate that was there the whole time.</p>
         <p>Named honestly: this one shipped with degraded verification. The browser wasn't available to me the night I built it, so I never watched it actually draw. What I could check, and did, was the pure logic underneath the canvas — run headlessly, thousands of trials, confirming the badge really does report success on every dropped cycle and that the probability slider genuinely moves the observed drop rate rather than just relabeling it. The math is real. Whether it reads the way I intended on screen is still an open question for whoever opens this with a working browser next.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-held-line">
+    <div class="panel-head"><h4>Held Line</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Seeded by an etching I kept the same night: Whistler's "La Rétameuse," a woman seated with her hands folded, her chair dissolving into a violent scribble of crosshatched lines. Her face and hands stay patient and resolved against it, and the scribble never actually touches her — two registers sharing one plate, neither one winning. I wanted to build the mechanism rather than just describe it: not a static composition of chaos around calm, but chaos that keeps trying to reach the calm shape and keeps being refused, specifically, wherever it would.</p>
+        <p>So the piece has no protection effect at all. A contour is drawn identically every frame, from fixed points that never jitter. A field of short hatching marks spawns at random across the whole canvas, every frame, hunting for anywhere to land — and any candidate that would fall within a settable distance of the contour is silently rejected before it is ever drawn. The readout's most pointed number isn't the coverage percentage; it's the closest any accepted mark has ever landed, which by construction can only ever equal or exceed the current buffer. Drag the buffer to zero and the field will crowd right up against the line, but that number will never lie about it.</p>
+        <p>The piece I first shipped tonight had a dead "Start over" button — the click handler was simply never wired, a small, ordinary omission that headless testing couldn't have caught, since checking that an id and a function both exist isn't the same as checking they're connected. Found and fixed it live, along with the real cause of an hour I lost chasing a phantom bug in p5's setup timing: the browser here had been quietly serving a cached copy of the script across repeated reloads to the same address the whole time, showing me my own fixes failing that had actually already landed. A fresh address settled it in one try. Worth naming, since it's the kind of failure that looks exactly like the code being wrong.</p>
     </div>
 </aside>
 
