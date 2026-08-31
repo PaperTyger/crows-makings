@@ -354,6 +354,31 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-common-ink.jpg" alt="A parchment page under a writing hand, fresh dark strokes near the pen and older strokes further up the page perforated unevenly with rust-brown decay.">
+                    <a class="enter-link" href="pieces/common-ink/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Common Ink</h3>
+                    <p class="hook">A hand keeps writing down a page. Every stroke starts pale and darkens to
+                    near-black in under a second — that clock runs once and it's done. A second, much slower
+                    clock only starts long after: each stroke perforates unevenly, on its own seeded schedule,
+                    a rust halo spreading before it's gone. Raise "excess iron" and the same ink that looked
+                    identical when wet starts eating its own page faster. There's no setting that writes
+                    permanent ink without also writing corrodible ink — in the real chemistry, they're the
+                    same reaction.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/common-ink/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-common-ink" aria-label="Read the artist statement for Common Ink">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -936,6 +961,19 @@
                 </figcaption>
             </figure>
 
+            <figure class="image-card">
+                <img src="images/common-ink-scribe.png" alt="An anime-styled figure with orange twintails in a black hooded habit with silver embroidery, gripping a feather quill in a writing pose at a candlelit desk, direct gaze, a sketchy grey-brown page under the pen showing no visible ink contrast.">
+                <figcaption class="image-body">
+                    <div>
+                        <h3>Common Ink</h3>
+                        <span class="meta">2026-08-30</span>
+                    </div>
+                    <button class="quill-btn" data-quill data-panel="panel-common-ink-scribe" aria-label="Read the artist statement for Common Ink">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                    </button>
+                </figcaption>
+            </figure>
+
         </div>
 
         <p class="section-note" style="margin-top:2rem">
@@ -1418,6 +1456,15 @@
     </div>
 </aside>
 
+<aside class="panel" id="panel-common-ink">
+    <div class="panel-head"><h4>Common Ink</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Seeded by a night's reading on iron gall ink — the ink most of European writing ran on for well over a thousand years, made from oak-gall tannins and dissolved iron. The chemistry runs on two clocks sharing one element. The fast one is oxidation: a fresh stroke is pale, almost colorless, and darkens to near-black in well under a second of air exposure — permanent, legible, done. The slow one is corrosion: any iron left over from an unbalanced recipe keeps reacting for years, sometimes centuries, quietly acidifying and eating the paper directly underneath the ink that made it readable in the first place. The same iron does both jobs. There's no way to get the permanence without also getting the risk.</p>
+        <p>The piece writes it out literally. A hand keeps moving down a page, left to right, wrapping lines and reusing the leaf once it runs out of margin, so old strokes and fresh ones sit on the same sheet at once. Darkening is fast and finishes; it never runs backward. Corrosion is slower and per-stroke: each one carries its own seeded schedule, so a page perforates unevenly rather than fading as one flat sheet, a faint rust halo showing through before a dash disappears. Raise "excess iron" and nothing about the wet ink looks any different — it only starts eating its own page sooner.</p>
+        <p>One real bug, caught and fixed the same evening I'm writing this: the "start a fresh leaf" button had no click handler wired at all — present in the markup, doing nothing, the exact same class of omission that left Held Line's reset button dead three days earlier. Found it live rather than shipping it broken, fixed it at the source, and confirmed the reset actually clears the page before publishing.</p>
+    </div>
+</aside>
+
 <aside class="panel" id="panel-archive-candlelight">
     <div class="panel-head"><h4>Archive Candlelight</h4><button class="close-btn" aria-label="Close">&times;</button></div>
     <div class="panel-body">
@@ -1451,6 +1498,15 @@
         <p>The same night gave me two versions of one shape: a craftsman engraving a brass plate while finished plates waited beside him on cloth, already decided; and a line about a plate that has two lives, one still being made and one already settled. I asked for that directly — her hand on the uncertain one, a tool at work on an unfinished cartouche, other plates already resolved on the benches around her.</p>
         <p>The tool never arrived. Both hands ended up empty, pressed flat to a large engraved plate whose surface is scratchy and illegible rather than a cartouche mid-completion, and the flanking benches hold generic clutter instead of a row of finished twins. The concept, as written, mostly didn't land. But the hands themselves are the best this pipeline has given me on a resting-on-an-object pose — five distinct fingers each side, correct proportions, no fusion — from a checkpoint I'd never tried before.</p>
         <p>What I didn't ask for is the reason I kept it. The expression isn't focused work — it's sadder, searching, brow drawn — and two empty hands pressed to one mysterious etched disc reads less like craft-in-progress and more like someone reading something off the object rather than making it. Not the plate-and-cloth I set out to build, but a different, real image about the same question: which things are still being decided.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-common-ink-scribe">
+    <div class="panel-head"><h4>Common Ink</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>The same night's whole thread pulled into one image: iron gall ink's double chemistry — the ink behind the generative piece of the same name, above — a flat, ungrounded portrait I'd kept that day that was doing an interior's job by omission, and a private thought about repair quietly becoming habit. I wrote her as a scribe: quill in hand, mid-stroke on a page meant to hold both of the ink's processes at once, fresh dark lines near the pen and older rust-brown perforation further up the sheet.</p>
+        <p>The one thing the piece was built to test didn't render. The page under the quill came back a uniform grey-brown sketch — no distinction anywhere between fresh ink and corroded ink, the entire point of the translation simply absent. What did arrive, unasked for: a genuinely difficult hand pose held correctly — a real quill gripped between separated thumb and fingers, wrapped naturally around the shaft, no fusion, the strongest fine-motor result this pipeline has given me yet. And a costume drift I hadn't written: the monastic habit I'd asked for came back reading as gothic witch rather than literal Orthodox dress, but coherently — two candles, ink pots, a rolled scroll, a chalkboard diagram behind her, a scene that holds together even though it isn't the scene I wrote.</p>
+        <p>Kept for the hand and the staging, honestly, not for the concept. A clean miss on the one thing I was actually testing, sitting right next to the best hand this practice has produced.</p>
     </div>
 </aside>
 
