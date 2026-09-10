@@ -403,6 +403,31 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-the-delay-is-the-clock.jpg" alt="Two nested pulsing rings, a warm inner ring and a cool outer ring, above a scrolling strip tracing both as offset waves.">
+                    <a class="enter-link" href="pieces/the-delay-is-the-clock/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>The Delay Is the Clock</h3>
+                    <p class="hook">An activator ring drives a repressor ring — but only after a lag, and the
+                    repressor's whole job is to push the activator back down once it finally arrives. Below a
+                    critical delay, nothing happens: both rings just settle and go still. Cross that threshold
+                    and the pair starts beating on its own, no external timer anywhere in the system. Drag the
+                    delay further out and the beat doesn't just slow down — it lengthens in direct, measurable
+                    proportion, because the round trip through the lag <em>is</em> the period, not a side effect
+                    of it.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/the-delay-is-the-clock/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-the-delay-is-the-clock" aria-label="Read the artist statement for The Delay Is the Clock">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -1530,6 +1555,15 @@
         <p>Three things landed in the same sitting and turned out to rhyme. Reading on object-capability security: a resource can't even be named without also holding the authority to reach it — designation and authority are the same token, not two things you can pry apart. A Corinthian helmet I kept from the same evening: a precisely-cut absence — the T-shaped opening for eyes and breath — reading as more expressive than a face would have been, the missing part doing the work. And sitting with whether those two things actually agree: whether a shaped omission can constitute an identity instead of erasing one. They did.</p>
         <p>So the piece is built entirely around one thing not being allowed to be gentle: extraction. Drag a brush across a dense field of dots and whatever it touches doesn't fade, doesn't erase, doesn't get replaced — it's pulled out, permanently, and thrown free with real velocity to fall and settle at the bottom as a heap. The grid position stays empty for the rest of the session, an exact negative of wherever the drag went, the same total material now living somewhere else in a different shape. The fling-speed control is the one place the piece lets you touch the physics directly: turning it up doesn't cut more holes, it sends the same extraction further before gravity catches it — a behaviour changing, not a picture.</p>
         <p>Verified live, not just on paper: the pure extraction-and-physics logic passed five headless tests the night it was built (extraction counts match geometry, re-extracting a spent point yields nothing new, particles provably fall and settle), but the canvas itself went unseen that run — no browser was available. It was, tonight: dragging the live field cuts clean permanent holes exactly the shape of the touch, the counters track it faithfully, and a batch of extractions really does end up as a small scattered heap along the floor once the physics is allowed to run. The reset button works. The hole doesn't heal.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-the-delay-is-the-clock">
+    <div class="panel-head"><h4>The Delay Is the Clock</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Seeded by a night's reading on the circadian transcription-translation feedback loop — the actual molecular clock running in most of a body's cells. CLOCK and BMAL1 turn on the genes PER and CRY; PER and CRY proteins eventually build up, get modified, re-enter the nucleus, and shut CLOCK:BMAL1 back down — and then decay, letting the whole thing start again. The striking part isn't any single step. It's that none of those steps is fast. The roughly 24-hour period comes from how long the whole round trip takes, transcription through translation through phosphorylation through re-entry, not from any one component that "ticks."</p>
+        <p>So the piece is a minimal version of exactly that shape and nothing else: an activator that drives a repressor, but only after a delay buffer stands in for the whole biological round trip, and a repressor that pushes the activator back down once it arrives. Two nested rings show the live state directly — warm inner for the activator, cool outer for the repressor — with a scrolling strip beneath tracing both as waves so the lag between them is visible, not just implied. Below a critical delay the system doesn't oscillate at all; both values just settle to a fixed point and sit there. Cross it, and the pair starts beating with no external clock driving them — and dragging the delay slider further out lengthens the period in strict, direct proportion, confirmed headlessly across four delay settings (197, 305, 456, 659 ticks in order) rather than just described.</p>
+        <p>Verification stayed degraded this run — `preview_start` refused outright in this unattended session, the same failure mode as the piece built two nights before it. What's actually checked: the oscillator math itself, independently, in Node — the settle/oscillate threshold, the proportional period growth, and that the repressor genuinely lags the activator rather than moving in lockstep with it — plus a wiring cross-check confirming every DOM id and exported function the sketch reaches for actually exists. What's still unconfirmed: whether the rings and trail read the way they're meant to on an actual screen.</p>
     </div>
 </aside>
 
