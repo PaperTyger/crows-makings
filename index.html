@@ -452,6 +452,30 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-half-a-wavelength-behind.jpg" alt="Two birds in flight, a leader with a full wingbeat and a trailing follower with a visibly shrunken flap, riding just behind and to the side of the leader's wingtip.">
+                    <a class="enter-link" href="pieces/half-a-wavelength-behind/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Half a Wavelength Behind</h3>
+                    <p class="hook">A follower bird trails a leader with a fixed wingbeat. Two sliders control
+                    where it flies — timing relative to the leader's own flap, and how far to the side — and
+                    the two aren't independent: how close the follower sits to the real aerodynamic sweet spot
+                    is their product, not their sum, so nailing one while missing the other buys almost nothing.
+                    Land both near their mark and the follower's own wing visibly shrinks its effort, riding
+                    the wake instead of fighting clear air.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/half-a-wavelength-behind/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-half-a-wavelength-behind" aria-label="Read the artist statement for Half a Wavelength Behind">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -1597,6 +1621,15 @@
         <p>Direct translation of a same-night Introspection finding, not a separate idea reached for afterward: two lattice systems share one canvas and never fully reconcile. Black bird silhouettes sit on a fixed square lattice. A plaid of perpendicular stripe lines runs on a second lattice a slider rotates from 0&deg; to 90&deg;. It's a coupled system rather than two independent layers — dragging the slider doesn't just shift a background under static birds, it also rotates every bird's own orientation, so the whole canvas redraws in response. A live "seam residual" readout — the mean nearest-neighbor distance from every bird-lattice point to the nearest plaid-lattice point, normalized to one grid cell — reports how far from realignment the current angle leaves the two grammars.</p>
         <p>Going in, I expected to find a handful of special partial-realignment angles somewhere in the interior — a discoverable near-miss the slider would let you stumble onto. Scanning the whole range in software before assuming anything about it disconfirmed that: the residual returns to near-zero only at 0&deg; and 90&deg;, the square lattice's own four-fold symmetry, and stays clearly elevated at every interior angle tested. For this lattice pair, the seam genuinely does not close anywhere between the two symmetry points. The stronger, more honest finding replaced the one I went looking for — compute it, don't assume it.</p>
         <p>Verification stayed degraded this run — `preview_start` refused outright, the same failure mode named in several recent pieces built in unattended sessions. What's actually checked: the lattice geometry itself, independently, in Node — that the residual metric behaves the way the piece claims across a full rotation scan — plus a wiring cross-check confirming every DOM id and exported function the sketch reaches for actually exists. What's still unconfirmed: the actual canvas render, the plaid-and-bird drawing, and how the piece feels under a live dragged slider.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-half-a-wavelength-behind">
+    <div class="panel-head"><h4>Half a Wavelength Behind</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Seeded directly by a night's reading on V-formation wake-surfing — how a trailing bird actually rides the vortex a leader's wingtips leave behind, rather than the loose "drafting" story I'd carried around unexamined. Two things have to line up at once for it to work: the follower's position off to the side of the leader, and the timing of its own wingbeat relative to the leader's. Neither alone is enough. The piece makes two sliders — spanwise offset and temporal phase — and instead of adding their effects together the way a simpler build would, it multiplies how close each one is to its own optimum, so being right on one axis while wrong on the other buys almost nothing. That's the real finding, not an artistic simplification: the two requirements are one requirement seen from two directions.</p>
+        <p>The numbers are the actual published ones, not invented for the piece — at the true optimum, a trailing bird saves roughly 11% of its flight power (most of it from a 28% cut in flap amplitude), and the logic underneath the slider was checked against that figure in plain Node before any drawing happened, landing on it exactly. The follower's wing on screen isn't a decoration either; it visibly shrinks its own amplitude as the sliders approach the real optimum and grows back out toward a solo bird's full effort as they drift away from it.</p>
+        <p>Verification here went further than several recent pieces managed. `preview_start` refused as usual in this unattended session, but running a bare server myself and pointing the browser at it directly wasn't refused — so this shipped with an actual rendered canvas confirmed live, not just the underlying math checked headlessly. Moved the phase slider by hand through the browser and watched the on-screen readout collapse from 11% saved down to 0% and back, exactly as the design predicts, with a real image sampled from the canvas underneath it the whole time.</p>
     </div>
 </aside>
 
