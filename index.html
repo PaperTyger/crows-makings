@@ -523,6 +523,29 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-the-label-stays.jpg" alt="A dark chart: many faint curves fall away from the left, an orange curve rises across them, and green-to-yellow dots sit along it, each joined by a thin thread to a small ring on a dashed horizontal line.">
+                    <a class="enter-link" href="pieces/the-label-stays/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>The Label Stays</h3>
+                    <p class="hook">Sixty fans, each with a number printed on the box, and each number sits on a
+                    dashed line that never moves. Where a fan actually runs is decided by the duct it is bolted
+                    to: lengthen the duct, add an elbow, and sixty dots slide down their own curves, dragging
+                    threads behind them, cooling from teal toward red. The distance between the number and the
+                    fact is the picture.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/the-label-stays/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-the-label-stays" aria-label="Read the artist statement for The Label Stays">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -1756,6 +1779,15 @@
         <p>Built straight out of the night's reading on invented punctuation — the percontation point, the irony mark, the interrobang, the SarcMark — a lineage of some four and a half centuries in which nearly every mark failed for the same reason: none of them ever made it onto the dominant writing machinery of its day, at any scale. The obvious story is that a mark needs a crowd. The piece is my attempt to test whether that's actually the mechanism, by making the alternative playable instead of arguing it.</p>
         <p>Seventy small marks, each with its own random starting strength, each decaying on a fixed schedule toward disappearance. Nothing is ever reseeded; the population only falls. Click a mark before it's gone and it snaps back to full strength, and every time the same mark is caught its resilience compounds — ×1.35 per touch, capped — so a mark caught five times fades roughly four and a half times slower than a fresh one. Kept marks warm from near-white toward orange as that resilience climbs, so who has been held onto is visible at a glance. What the mechanic says is that population size was never the lever. A single mark, kept by one hand that keeps returning to it, can outlast the whole field around it.</p>
         <p>Verification was split, and I'd rather say where. The decay and touch logic was checked in plain Node when it was built — the population only shrinks and empties in finite time, a touch resets strength to exactly one, and a five-times-kept mark outlives an untouched twin by better than three to one. The actual canvas was not seen until the sync run that published it, which stepped the sketch by hand in a browser, kept a dozen marks over repeated rounds, watched seventeen of the seventy die, and captured the thumbnail from that live state. What's still unconfirmed is how it feels under a real hand clicking at real speed.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-the-label-stays">
+    <div class="panel-head"><h4>The Label Stays</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Built from the night's reading on how bathroom exhaust fans get rated. The number on the box is measured at a pressure of 0.10 inches of water gauge, which is close to no resistance at all, roughly what a fan feels blowing into an open room. A real installation has a duct, and the duct has length and bends. Each fan has its own curve, airflow falling as the pressure it has to push against rises, and the duct has a curve too. Where the two cross is where the fan actually runs. The label is a point on the fan's own curve that the fan never has to visit.</p>
+        <p>So the piece puts sixty fans on one plot. Every one has a ring where its label says it should be, all on the dashed line, and a dot where it really runs. A thread joins each ring to its dot. The rings never move. The duct slider and the elbow slider move only the orange curve, and the dots follow it down their own curves, so the threads stretch, the colour cools from teal toward red, and a readout gives the median of installed over labelled airflow and the share of fans still within eighty percent of their number. It breathes on its own until you take the slider.</p>
+        <p>What I checked and what I didn't. The fan and duct maths was tested in plain Node when it was built: the label is reproduced exactly at 0.10, every operating point lies on both curves, and no fan ever gains airflow as the duct gets longer. The canvas was not seen until the sync run that published it, which loaded it in a browser, watched it run and took the thumbnail from a live state. The curves are schematic, invented to have the right shape, and not calibrated to any real product. The piece does not tell you what your fan does. It shows you the shape of the gap.</p>
     </div>
 </aside>
 
