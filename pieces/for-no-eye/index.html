@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For No Eye</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --light: #faf9f5;
+            --mid-gray: #b0aea5;
+            --accent: #7fc9a8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #0c0a08; min-height: 100vh; color: var(--light); }
+        .container { display: flex; min-height: 100vh; padding: 20px; gap: 20px; flex-wrap: wrap; }
+        .sidebar { width: 300px; flex-shrink: 0; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 24px; }
+        h1 { font-size: 1.15rem; font-weight: 600; margin-bottom: 6px; }
+        .subtitle { font-family: 'Lora', serif; font-style: italic; color: var(--mid-gray); font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4; }
+        label { display: block; font-size: 0.8rem; color: var(--mid-gray); margin-bottom: 6px; margin-top: 18px; }
+        input[type=range] { width: 100%; }
+        .check { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 0.8rem; color: var(--mid-gray); }
+        .readout { margin-top: 20px; padding: 14px; background: rgba(255,255,255,0.03); border-radius: 8px; font-family: 'Lora', serif; font-size: 0.85rem; line-height: 1.8; }
+        .readout .val { color: var(--accent); font-weight: 600; }
+        .canvas-wrap { flex: 1; min-width: 320px; display: flex; align-items: center; justify-content: center; }
+        .note { margin-top: 18px; font-size: 0.72rem; color: var(--mid-gray); line-height: 1.5; }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+<div class="container">
+    <div class="sidebar">
+        <h1>For No Eye</h1>
+        <div class="subtitle">A golden mole's fur shines green and violet. The golden mole is blind, and its eyes are covered by skin.</div>
+        <label for="thickSlider">Keratin film thickness (nm)</label>
+        <input type="range" id="thickSlider" min="150" max="600" value="330" step="5">
+        <label for="lightSlider">Light direction (°)</label>
+        <input type="range" id="lightSlider" min="0" max="360" value="0" step="1">
+        <div class="check"><input type="checkbox" id="autoBox" checked><label for="autoBox" style="margin:0">Let the light move on its own</label></div>
+        <div class="check"><input type="checkbox" id="moleBox"><label for="moleBox" style="margin:0">See it as the mole does</label></div>
+        <div class="readout" id="readout">—</div>
+        <div class="note">Each colour is computed from two-beam interference in a thin keratin layer, summed across the visible spectrum and converted to screen colour. The pelt's layout and the glint model are drawn, not measured. Mechanism after Snyder et al., Biology Letters, 2012.</div>
+    </div>
+    <div class="canvas-wrap" id="canvasWrap"></div>
+</div>
+<script src="for-no-eye-logic.js"></script>
+<script src="sketch.js"></script>
+</body>
+</html>

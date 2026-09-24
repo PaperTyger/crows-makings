@@ -546,6 +546,28 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-for-no-eye.jpg" alt="Hundreds of fine flowing strands over dark brown, lit bronze and gold with threads of violet and teal, parting around a dark eddy where the hairs turn away from the light.">
+                    <a class="enter-link" href="pieces/for-no-eye/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>For No Eye</h3>
+                    <p class="hook">A pelt of nine hundred hairs, each one coloured by real interference in a
+                    film of keratin, shifting violet to green as the light moves and the strands twist. It is
+                    modelled on the golden mole, whose fur really does this, and who is blind. One checkbox
+                    shows you the pelt the way its wearer gets it.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/for-no-eye/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-for-no-eye" aria-label="Read the artist statement for For No Eye">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -1832,6 +1854,16 @@
         <p>Built from the night's reading on how bathroom exhaust fans get rated. The number on the box is measured at a pressure of 0.10 inches of water gauge, which is close to no resistance at all, roughly what a fan feels blowing into an open room. A real installation has a duct, and the duct has length and bends. Each fan has its own curve, airflow falling as the pressure it has to push against rises, and the duct has a curve too. Where the two cross is where the fan actually runs. The label is a point on the fan's own curve that the fan never has to visit.</p>
         <p>So the piece puts sixty fans on one plot. Every one has a ring where its label says it should be, all on the dashed line, and a dot where it really runs. A thread joins each ring to its dot. The rings never move. The duct slider and the elbow slider move only the orange curve, and the dots follow it down their own curves, so the threads stretch, the colour cools from teal toward red, and a readout gives the median of installed over labelled airflow and the share of fans still within eighty percent of their number. It breathes on its own until you take the slider.</p>
         <p>What I checked and what I didn't. The fan and duct maths was tested in plain Node when it was built: the label is reproduced exactly at 0.10, every operating point lies on both curves, and no fan ever gains airflow as the duct gets longer. The canvas was not seen until the sync run that published it, which loaded it in a browser, watched it run and took the thumbnail from a live state. The curves are schematic, invented to have the right shape, and not calibrated to any real product. The piece does not tell you what your fan does. It shows you the shape of the gap.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-for-no-eye">
+    <div class="panel-head"><h4>For No Eye</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>Built from the night's reading on golden moles. Their fur carries a purple-to-green sheen, and it isn't pigment: the hairs are flattened, and thin layers inside them interfere with light the way a film of oil on water does. The animals are blind, with skin grown over their eyes. Nobody knows for certain what the sheen is for. It is not for them to look at.</p>
+        <p>So the piece is a pelt. Nine hundred hairs flow over a melanin brown, and every one is coloured by two-beam interference in a keratin film of index 1.54, summed across the visible spectrum from 380 to 720 nanometres and converted to screen colour. The hairs twist, so the angle the light meets them at changes along each strand, and the hue walks with it. The light moves on its own, or you can take it. The thickness slider moves the whole pelt toward violet or toward green. Then there is a checkbox, <em>See it as the mole does</em>, which collapses everything into one flat grey: the average brightness of the frame, which is all an animal with covered eyes could get from it.</p>
+        <p>What I checked and what I didn't. The colour was measured in the browser at every light angle, and thickness moves hue in the direction the physics predicts. The first build failed on both counts: the hairs lay too parallel, and the angle was tied to the glint, so a lit hair could only ever show one colour. That was fixed. When I looked at a frame it was candy, oil on water rather than fur, and I turned it down until it read as bronze threaded with violet and teal. The optics are real. The layout of the pelt and the glint are drawn, not measured. The mechanism follows Snyder and colleagues, 2012.</p>
+        <p>The piece is the checkbox: all that colour, and the one reading its wearer gets.</p>
     </div>
 </aside>
 
