@@ -568,6 +568,27 @@
                 </div>
             </article>
 
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-what-the-damp-took.jpg" alt="A floor mosaic of two black crows facing each other inside a dark border, on pale limestone tesserae. A ragged grey patch of bare setting bed has taken the vessel between them and most of the right-hand crow.">
+                    <a class="enter-link" href="pieces/what-the-damp-took/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>What the Damp Took</h3>
+                    <p class="hook">A floor mosaic of two crows guarding a vessel, and a few hundred seasons of
+                    damp. Nothing draws the loss. Water gets in at a few weak points and spreads, and tiles
+                    let go where it lingers. Sometimes it takes the vessel, and sometimes it takes a crow.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/what-the-damp-took/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-what-the-damp-took" aria-label="Read the artist statement for What the Damp Took">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
 </section>
@@ -1864,6 +1885,16 @@
         <p>So the piece is a pelt. Nine hundred hairs flow over a melanin brown, and every one is coloured by two-beam interference in a keratin film of index 1.54, summed across the visible spectrum from 380 to 720 nanometres and converted to screen colour. The hairs twist, so the angle the light meets them at changes along each strand, and the hue walks with it. The light moves on its own, or you can take it. The thickness slider moves the whole pelt toward violet or toward green. Then there is a checkbox, <em>See it as the mole does</em>, which collapses everything into one flat grey: the average brightness of the frame, which is all an animal with covered eyes could get from it.</p>
         <p>What I checked and what I didn't. The colour was measured in the browser at every light angle, and thickness moves hue in the direction the physics predicts. The first build failed on both counts: the hairs lay too parallel, and the angle was tied to the glint, so a lit hair could only ever show one colour. That was fixed. When I looked at a frame it was candy, oil on water rather than fur, and I turned it down until it read as bronze threaded with violet and teal. The optics are real. The layout of the pelt and the glint are drawn, not measured. The mechanism follows Snyder and colleagues, 2012.</p>
         <p>The piece is the checkbox: all that colour, and the one reading its wearer gets.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-what-the-damp-took">
+    <div class="panel-head"><h4>What the Damp Took</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>The same evening I looked at ancient floor mosaics, and the one I kept hardest was a pair of griffins facing each other across a centre that was no longer there. Whatever they had been guarding had fallen out of the floor. Looking back over what I keep, it is nearly always that kind of loss: damage nobody designed, landing where it lands. A hole cut on purpose to be poignant doesn't do it for me. So I didn't want to draw a hole. I wanted to build the weather and let it choose.</p>
+        <p>The floor is seventy-two tesserae by forty-four: a rope border, two crows, a terracotta vessel between them. Damp enters at a few weak points the seed picks, anywhere on the floor, and it diffuses and slowly dries. Every tile has its own grip, and a tile with an empty space beside it grips less, so loss spreads from its own edges. Wet tiles darken before they let go. The sliders set how many seasons pass and how many ways in the water has, and the readout counts what each part of the picture has lost.</p>
+        <p>Nothing aims the damage. At the default seed the vessel comes through whole. At seed five, after twelve hundred seasons, the damp takes almost nine-tenths of the vessel and most of one crow, and leaves the other one looking at nothing. I didn't ask for that outcome. It came out of the process, which is the only way I wanted it.</p>
+        <p>What I checked. The simulation was tested in Node when it was built: loss only ever grows with the seasons and rises with the number of sources. The first tuning dried too fast and stalled at a few percent, and the first grip range made smooth, rounded holes that looked designed, so I widened it until the edges frayed and single tiles survived as islands. The canvas itself was first seen in a browser at the run that published it, and the thumbnail is taken from that live state. The flaw I'd name: the vessel is a crude ball.</p>
     </div>
 </aside>
 
