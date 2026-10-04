@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Wire Over All of Them</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: #14110d; color: #e8e2d4; min-height: 100vh; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; padding: 64px 20px 20px; }
+        .sidebar { width: 280px; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 22px; }
+        h1 { font-size: 1.1rem; margin-bottom: 6px; }
+        .subtitle { font-style: italic; color: #b0a894; font-size: 0.85rem; line-height: 1.45; margin-bottom: 18px; }
+        label { display: block; font-size: 0.8rem; color: #b0a894; margin: 16px 0 6px; }
+        input[type=range] { width: 100%; }
+        button { margin-top: 12px; padding: 6px 12px; background: #2c2a24; color: #e8e2d4; border: 0; border-radius: 6px; cursor: pointer; }
+        #readout { margin-top: 18px; font-size: 0.85rem; color: #cfc6b2; line-height: 1.5; }
+        .note { margin-top: 18px; font-size: 0.75rem; color: #8c8472; line-height: 1.45; }
+        #canvas-holder canvas { max-width: 100%; height: auto; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+<div class="container">
+    <div class="sidebar">
+        <h1>One Wire Over All of Them</h1>
+        <p class="subtitle">Seven wheels, each turning at its own speed. None of them knows about water.</p>
+        <label for="engaged">wheels engaged</label>
+        <input type="range" id="engaged" min="1" max="7" step="1" value="7">
+        <label for="speed">hours per second</label>
+        <input type="range" id="speed" min="2" max="40" step="1" value="15">
+        <button id="again">fresh paper</button>
+        <div id="readout"></div>
+        <p class="note">Seattle's constants (NOAA 9447130). The speeds and throws are real. The phases only set where each wheel starts, so this is Seattle's tide, not any particular day of it.</p>
+    </div>
+    <div id="canvas-holder"></div>
+</div>
+<script src="one-wire-logic.js"></script>
+<script src="sketch.js"></script>
+</body>
+</html>
