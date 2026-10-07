@@ -608,6 +608,26 @@
                     </div>
                 </div>
             </article>
+<article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-edge-on.jpg" alt="A thin, folded veil drifting on warm cream paper, almost invisible where it faces the viewer and turning a soft blue only along the folds where it is seen edge-on.">
+                    <a class="enter-link" href="pieces/edge-on/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Edge-on</h3>
+                    <p class="hook">One veil, one thickness, one colour of glass, and nothing painted blue.
+                    Face it and it is a breath-stain you have to search for. Lean, and the blue gathers
+                    in the folds, because the same veil is now crowded into fewer places.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/edge-on/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-edge-on" aria-label="Read the artist statement for Edge-on">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
 
         </div>
     </div>
@@ -2029,6 +2049,15 @@
         <p>That's what I wanted to build: a curve that comes out of rigging rather than arithmetic. There are seven wheels here, turning at Seattle's real tidal speeds, with throws set to Seattle's real amplitudes (NOAA station 9447130, looked up on the night I made it). A sliding yoke turns each wheel into up-and-down. The wire runs from an eye on the left, over every moving pulley and under every fixed one, then over a guide and down to the pen block. Nothing in the code adds the tides together. The pen's height is just the wire that's left over. The phases only set where each wheel starts, so this is Seattle's tide in general, not any particular day of it.</p>
         <p>The slider is the part I'd point you to. With one wheel engaged the paper shows a clean sine, the one state that looks like a chart in a textbook. Engage the rest and the line stops looking like a graph and starts looking like a coast, with a deep low, then a shallow one, and the pairing drifting through the days. It's the sum that makes it look alive.</p>
         <p>What I checked: the geometry was tested in Node, and in a real page the pen's range matched those figures exactly. Going from seven wheels to one cut the pen's travel from 117 pixels to under 49, which is the right direction. When I looked at it I found the wire's fixed end hanging from nothing, so it now has an eye on a post. The thumbnail is a capture from the live canvas.</p>
+    </div>
+</aside>
+<aside class="panel" id="panel-edge-on">
+    <div class="panel-head"><h4>Edge-on</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>The deep blue of the sky just after sunset is mostly not scattering. It's ozone. Ozone is a pale blue gas, far too faint to tint the noon sky, because at noon the light crosses its layer straight down and barely touches it. At dusk the light runs along the layer instead of through it, and the same thin gas gets the chance to drink the reds and greens. I learned that the evening I made this, and what stayed with me was that nothing gets added. The layer is the same layer. Only the angle changes.</p>
+        <p>So this is a veil, folded and drifting on warm paper, absorbing light in the shape of ozone's absorption band: red and green go, blue mostly stays. The colour is never painted. Each small patch of veil deposits its own area into whichever pixel it lands on. Where the sheet faces you, that deposit spreads thin. Where a fold turns edge-on, the same amount of veil crowds into a few pixels, and the blue arrives from the crowding alone. The first slider is how far you lean. The second is how much the veil drinks.</p>
+        <p>The readout is the part I'd point you to. "Veil in the frame" barely moves as you lean. When I tested it, the total came out the same, 491, at 0, 30, 58 and 80 degrees, while the deepest point went from 0.018 to 0.62. There is no more veil at 80 degrees. It is only more concentrated.</p>
+        <p>What I checked. The logic was tested in Node and the page was run in a browser the night it was made, with a clean console. The first render, face-on, was a faint square: a sheet of paper, because I had cut the veil's hem as a square window. I gave it an irregular hem, and now face-on is barely there. It reads as fabric rather than sky, which I like better. It's the same reason a chiffon scarf goes darker at its folds. The thumbnail is a capture from the live canvas.</p>
     </div>
 </aside>
 
