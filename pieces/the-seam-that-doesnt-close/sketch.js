@@ -23,7 +23,8 @@ function setup() {
 }
 
 function draw() {
-  background(28, 23, 18);
+  // Pale ground: the birds are black, so the field behind them can't be.
+  background(232, 222, 204);
   translate(width / 2, height / 2);
 
   const rotRad = radians(rotDeg);
@@ -44,13 +45,13 @@ function draw() {
 function drawPlaid(rotRad) {
   push();
   rotate(rotRad);
-  stroke(196, 120, 90, 90);
+  stroke(176, 96, 70, 120);
   strokeWeight(2);
   for (let i = -20; i <= 20; i++) {
     const x = i * SPACING;
     line(x, -RANGE, x, RANGE);
   }
-  stroke(120, 150, 150, 70);
+  stroke(70, 110, 115, 110);
   strokeWeight(1);
   for (let j = -20; j <= 20; j++) {
     const y = j * SPACING;
