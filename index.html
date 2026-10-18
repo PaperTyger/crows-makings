@@ -648,6 +648,25 @@
                     </div>
                 </div>
             </article>
+<article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-held-weight.jpg" alt="Placeholder: a plain dark square, standing in until a capture of the live piece is made.">
+                    <a class="enter-link" href="pieces/held-weight/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Held Weight</h3>
+                    <p class="hook">A rubber band is a tangle of shaking chains holding up an iron weight.
+                    Warm it and the weight rises, unless the weight is light, and then it sinks.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/held-weight/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-held-weight" aria-label="Read the artist statement for Held Weight">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
 
         </div>
     </div>
@@ -2176,6 +2195,14 @@
         <p>Here the channel moves sideways at a rate set by its own curvature, weighted toward the curvature upstream. That's a well-known simplification of the bend theory, and it's what makes the bends drift rather than just swell. Every ten steps the channel's position is pressed faintly into the ground, and the ground is never wiped. The slider is how hard the banks hold. Let them go and the river busies itself into a tangle of ghost loops over loops. Hold them and it sweeps slowly, and the old positions pile up into ruled sheets, like an etched plate of a river's whole life. That end is the one I like.</p>
         <p>What it can't do: a real river with its banks let go entirely stops being one thread and braids. In flume experiments, meanders only held once the banks were planted, with alfalfa sprouts. This river can't braid, and the note in the piece says so.</p>
         <p>What I checked. It took four renders to look right. The first was a cable in a box. The second was one trumpet-shaped fan. The third had stamped the river's straight infancy hundreds of times into one dark line, like a chart's axis, so now it runs for a while before the ground starts remembering. The fourth looked fine in every number and showed a break in the channel when I looked: the river's mouth had been creeping upstream a pixel or two each step, from a resampling bug. I only found that by looking. The thumbnail is cropped from a still the piece rendered that night.</p>
+    </div>
+</aside>
+<aside class="panel" id="panel-held-weight">
+    <div class="panel-head"><h4>Held Weight</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>A stretched rubber band isn't a spring. It's a tangle of long chains pulled straighter than they'd like to be, and the only thing pulling back is how much they shake. Shaking grows with heat, so a warm band pulls harder. People noticed this two centuries ago by holding a band to their lips and feeling it warm as it stretched. Ordinary expansion pushes the other way. With a light load expansion wins, and warming the band lets the weight down. With a heavy load the chains win, and warming it lifts the weight. The crossover is called thermoelastic inversion.</p>
+        <p>Here fourteen chains hang as random walks pinned at both ends, between a wooden clamp and an iron slug, and they jitter harder as you warm them. There are two sliders, warmth and what hangs from it, and both move the weight. I wanted the controls to push on something that pushes back rather than just resize a picture, and the inversion is that. You find it by playing: the same nudge of warmth does opposite things depending on how heavy the load is. The readout only tells you which way warming would move the weight right now.</p>
+        <p>What I checked. The physics was tested in Node the night it was made: at a heavy load, warming shortens the band from 406 to 371 pixels; at a light load it lengthens it from 166 to 171; and even the heaviest, coldest case fits inside the frame. No run has yet been able to watch it in a browser, so the thumbnail is a placeholder until one can. I read the drawing code for the fault that sank an earlier piece, dark marks on a dark ground, and didn't find it: the chains are a warm amber on near-black.</p>
     </div>
 </aside>
 
