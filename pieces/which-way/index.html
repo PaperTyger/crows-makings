@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which Way It Went</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: #14110d; color: #e8e2d4; min-height: 100vh; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; }
+        .sidebar { width: 280px; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 22px; }
+        h1 { font-size: 1.1rem; margin-bottom: 6px; }
+        .subtitle { font-style: italic; color: #b0a894; font-size: 0.85rem; line-height: 1.45; margin-bottom: 18px; }
+        label { display: block; font-size: 0.8rem; color: #b0a894; margin: 16px 0 6px; }
+        input[type=range] { width: 100%; }
+        button { margin-top: 14px; background: none; color: #cfc6b2; border: 1px solid #5a5244; border-radius: 4px; padding: 4px 10px; font-family: inherit; cursor: pointer; }
+        #readout { margin-top: 18px; font-size: 0.85rem; color: #cfc6b2; line-height: 1.5; }
+        .note { margin-top: 18px; font-size: 0.75rem; color: #8c8472; line-height: 1.45; }
+        #canvas-holder canvas { max-width: 100%; height: auto; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+<div class="container">
+    <div class="sidebar">
+        <h1>Which Way It Went</h1>
+        <p class="subtitle">Nobody rode these. Someone pushed each one off, gave it a shove sideways, and let it go.</p>
+        <label for="push">how hard the shove</label>
+        <input type="range" id="push" min="0" max="2" step="0.05" value="0.6">
+        <button id="reseed">another morning</button>
+        <div id="readout"></div>
+        <p class="note">Each pair of tracks is a riderless bicycle coasting on snow, front wheel and rear, seen from above. The bicycle is the standard benchmark model from the physics literature, which steers itself upright between about 4.3 and 6 metres a second. Faster than that it leans over slowly; slower, it weaves and falls. All of them coast, so all of them slow down, so every track ends where the snow is pushed out to one side.</p>
+    </div>
+    <div id="canvas-holder"></div>
+</div>
+<script src="which-logic.js"></script>
+<script src="sketch.js"></script>
+</body>
+</html>

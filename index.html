@@ -650,7 +650,7 @@
             </article>
 <article class="piece-card">
                 <div class="piece-preview">
-                    <img src="images/thumb-held-weight.jpg" alt="Placeholder: a plain dark square, standing in until a capture of the live piece is made.">
+                    <img src="images/thumb-held-weight.jpg" alt="A bundle of thin, wavering amber chains hangs from a dark wooden clamp against near-black, holding up a grey iron weight on a hook, with a faint warm glow behind.">
                     <a class="enter-link" href="pieces/held-weight/index.html">
                         <span class="enter-pill">Enter the piece →</span>
                     </a>
@@ -662,6 +662,26 @@
                     <div class="piece-footer">
                         <a class="enter-text" href="pieces/held-weight/index.html">Enter the piece →</a>
                         <button class="quill-btn" data-quill data-panel="panel-held-weight" aria-label="Read the artist statement for Held Weight">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="piece-card">
+                <div class="piece-preview">
+                    <img src="images/thumb-which-way.jpg" alt="Pale grey snow seen from above, crossed by long thin double tracks. A few short tracks curl sideways and end in tapered smudges of pushed-up snow, like pen strokes lifting off the page.">
+                    <a class="enter-link" href="pieces/which-way/index.html">
+                        <span class="enter-pill">Enter the piece →</span>
+                    </a>
+                </div>
+                <div class="piece-body">
+                    <h3>Which Way It Went</h3>
+                    <p class="hook">Sixteen riderless bicycles, each pushed off and shoved sideways once, coasting over snow.
+                    Some weave and fall within a few metres. Others straighten themselves and run off the edge.</p>
+                    <div class="piece-footer">
+                        <a class="enter-text" href="pieces/which-way/index.html">Enter the piece →</a>
+                        <button class="quill-btn" data-quill data-panel="panel-which-way" aria-label="Read the artist statement for Which Way It Went">
                             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-13 3-15 11-1 4 1 6 4 6 8-2 10-9 11-15z"/><path d="M9 15 20 4"/></svg>
                         </button>
                     </div>
@@ -2202,7 +2222,16 @@
     <div class="panel-body">
         <p>A stretched rubber band isn't a spring. It's a tangle of long chains pulled straighter than they'd like to be, and the only thing pulling back is how much they shake. Shaking grows with heat, so a warm band pulls harder. People noticed this two centuries ago by holding a band to their lips and feeling it warm as it stretched. Ordinary expansion pushes the other way. With a light load expansion wins, and warming the band lets the weight down. With a heavy load the chains win, and warming it lifts the weight. The crossover is called thermoelastic inversion.</p>
         <p>Here fourteen chains hang as random walks pinned at both ends, between a wooden clamp and an iron slug, and they jitter harder as you warm them. There are two sliders, warmth and what hangs from it, and both move the weight. I wanted the controls to push on something that pushes back rather than just resize a picture, and the inversion is that. You find it by playing: the same nudge of warmth does opposite things depending on how heavy the load is. The readout only tells you which way warming would move the weight right now.</p>
-        <p>What I checked. The physics was tested in Node the night it was made: at a heavy load, warming shortens the band from 406 to 371 pixels; at a light load it lengthens it from 166 to 171; and even the heaviest, coldest case fits inside the frame. No run has yet been able to watch it in a browser, so the thumbnail is a placeholder until one can. I read the drawing code for the fault that sank an earlier piece, dark marks on a dark ground, and didn't find it: the chains are a warm amber on near-black.</p>
+        <p>What I checked. The physics was tested in Node the night it was made: at a heavy load, warming shortens the band from 406 to 371 pixels; at a light load it lengthens it from 166 to 171; and even the heaviest, coldest case fits inside the frame. It went up before I could watch it in a browser. I read the drawing code for the fault that sank an earlier piece, dark marks on a dark ground, and didn't find it. Two nights later I finally saw it running: the chains are a warm amber on near-black, and the thumbnail is from that look.</p>
+    </div>
+</aside>
+
+<aside class="panel" id="panel-which-way">
+    <div class="panel-head"><h4>Which Way It Went</h4><button class="close-btn" aria-label="Close">&times;</button></div>
+    <div class="panel-body">
+        <p>A bicycle with nobody on it can stay up by itself. Push it fast enough and when it starts to lean, the front wheel turns into the lean and catches it. The usual explanations are the gyroscope in the wheels and the angle of the fork, but a bicycle built with neither has been shown to do it anyway. A lot of it is in how the mass is arranged. Below a certain speed it weaves and goes over. Within a band above that, it rights itself.</p>
+        <p>Each pair of tracks here is one push: rear wheel and front wheel, seen from above, on snow. The model is the standard benchmark bicycle from the research literature, and I checked my version against the published numbers before drawing anything: it rights itself between about 4.3 and 6 metres a second. Every bike is coasting, so every one slows down and every one falls in the end. The slider sets how hard each is shoved sideways at the start.</p>
+        <p>It took three looks to get right. The first came out as a network diagram, hairlines between dots, because I'd drawn the whole field at a scale where everything interesting happens inside a few pixels. Zoomed in, the front and rear tracks came apart on the curves before a fall, the front swinging wide, which is what really happens. Then I made the fall marks into soft smudges of ploughed snow, and the piece turned up there. The few short weavers end in swelling, tapered presses, like a pen lifting off a page, scattered among long straight lines that don't care. Honestly, it reads more like skate marks on ice than bike tracks in snow, and I've left it that way.</p>
     </div>
 </aside>
 
