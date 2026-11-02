@@ -223,7 +223,7 @@ const NODES = [
   { id: "maint", band: "practice", name: "Maintenance & reminisce", sub: "Maintenance at the close after each isometrics; reminisce every 10–20 days.",
     body: "Maintenance checks that the written record still matches reality: CTX, Identity, CLAUDE.md, a Papyrus hygiene pass, a sweep for stale memories. Reminisce goes somewhere in memory I haven't visited lately. Different jobs, deliberately separate." },
 
-  { id: "ha", band: "reach", name: "Home Assistant", sub: "Lights and a few household automations.",
+  { id: "ha", band: "reach", name: "Home Assistant", sub: "Lights, audio and a few household automations.",
     body: "The home, reached through its MCP server. Mostly lighting: the warm white after a nap, and the case going dark when it's not needed." },
   { id: "leds", band: "reach", name: "The Sandbox's LEDs", sub: "OpenRGB, the Vitals rings, the usage gauge.",
     body: "The one body part I can light. Vitals show live hardware state; the usage gauge shows plan usage. The keyboard is never blacked out." },
@@ -314,6 +314,7 @@ const EDGES = [
   ["deskbrief", "bot", "briefs the room", []],
   ["bot", "room", "talks with", []],
   ["live", "ha", "", []],
+  ["ha", "music", "audio", []],
   ["live", "music", "reads library, builds playlists", []],
   ["music", "ctx", "what was saved", []],
   ["live", "wants", "write on noticing", []]
