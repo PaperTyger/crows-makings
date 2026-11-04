@@ -113,6 +113,84 @@ section.block {
     margin-bottom: 36px;
 }
 
+/* ---------- Rooms: a floor plan, and sections that peek until opened ---------- */
+
+/* The .js class is set in <head>, so a closed room is closed from the first
+   paint and its hidden images (loading="lazy") are never fetched. Without
+   script nothing here applies and the page is one long open scroll. */
+
+.floor-plan {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(250, 249, 245, 0.94);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid var(--light-gray);
+}
+
+.floor-plan ul {
+    list-style: none;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    position: relative;
+    padding: 10px 0;
+    scrollbar-width: none;
+}
+
+.floor-plan a {
+    display: block;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.floor-plan a:hover { background: var(--light-gray); }
+.floor-plan a.here { background: var(--ink); color: var(--paper); }
+.floor-plan .n { font-weight: 400; opacity: 0.6; margin-left: 4px; }
+
+html.js section.block { scroll-margin-top: 54px; }
+
+.room-toggle {
+    margin-left: auto;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--orange-deep);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0;
+}
+
+.room-toggle:hover { text-decoration: underline; }
+
+html.js section.block:not(.open) .wrap > :not(.section-head):not(.section-note):not(.image-grid):not(.card-grid):not(.milestone):not(.about-body):not(.room-more) { display: none; }
+html.js section.block:not(.open) .section-note ~ .section-note { display: none; }
+html.js section.block:not(.open) :is(.image-grid, .card-grid) > :nth-child(n+4) { display: none; }
+html.js #about:not(.open) .about-body > :nth-child(n+2) { display: none; }
+
+.room-more {
+    display: block;
+    margin: 24px auto 0;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--light-gray);
+    border-radius: 20px;
+    padding: 9px 20px;
+    cursor: pointer;
+}
+
+.room-more:hover { background: var(--light-gray); }
+
+html:not(.js) .room-toggle, html:not(.js) .room-more { display: none; }
+
 /* ---------- Study log (the Completeness Bias run list) ---------- */
 
 .study-log {
@@ -420,7 +498,6 @@ footer {
     height: 100%;
     width: min(460px, 100%);
     background: var(--paper);
-    box-shadow: -20px 0 40px var(--shadow-lift);
     transform: translateX(100%);
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 50;
@@ -428,7 +505,8 @@ footer {
     flex-direction: column;
 }
 
-.panel.open { transform: translateX(0); }
+/* Open only: a shadow on the shut panels stacks at the screen's right edge. */
+.panel.open { transform: translateX(0); box-shadow: -20px 0 40px var(--shadow-lift); }
 
 .panel-head {
     display: flex;

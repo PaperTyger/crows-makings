@@ -22,6 +22,145 @@
     });
 })();
 
+// Rooms — each section peeks at its first row until opened, and a sticky floor
+// plan walks between them. Built from the DOM like the piece count, so a card or
+// section added later by the sync task is counted and handled without new markup.
+// Open rooms last for the visit; a fresh visit starts at the top with rooms shut.
+
+(function () {
+    const rooms = Array.from(document.querySelectorAll('section.block'));
+    if (!rooms.length) return;
+
+    const KEY = 'crows-makings-open';
+    const load = () => {
+        try { return JSON.parse(sessionStorage.getItem(KEY)) || []; }
+        catch (e) { return []; }
+    };
+    const save = () => {
+        const open = rooms.filter((r) => r.classList.contains('open')).map((r) => r.id);
+        try { sessionStorage.setItem(KEY, JSON.stringify(open)); }
+        catch (e) { /* private window: rooms just won't be remembered */ }
+    };
+
+    const cardsIn = (room) => room.querySelectorAll('.image-card, .piece-card').length;
+    const nameOf = (room) => room.querySelector('h2').textContent.trim();
+    // Anything a closed room hides: cards past the first row, or anything else
+    // the closed rules take away. Rooms that hide nothing get no controls.
+    const hasMore = (room) => {
+        const was = room.classList.contains('open');
+        room.classList.remove('open');
+        const hidden = Array.from(room.querySelectorAll('.wrap > *, .wrap > * > *'))
+            .some((el) => getComputedStyle(el).display === 'none');
+        room.classList.toggle('open', was);
+        return hidden;
+    };
+
+    function setOpen(room, open) {
+        room.classList.toggle('open', open);
+        const n = cardsIn(room);
+        const label = open ? 'Close' : (n ? `See all ${n}` : 'Read on');
+        room.querySelectorAll('.room-toggle, .room-more').forEach((btn) => {
+            btn.textContent = label;
+            btn.setAttribute('aria-expanded', String(open));
+        });
+    }
+
+    const nav = document.createElement('nav');
+    nav.className = 'floor-plan';
+    nav.setAttribute('aria-label', 'Rooms');
+    nav.innerHTML = '<div class="wrap"><ul></ul></div>';
+    const list = nav.querySelector('ul');
+    const links = new Map();
+
+    rooms.forEach((room) => {
+        const n = cardsIn(room);
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${room.id}`;
+        a.textContent = nameOf(room);
+        if (n) {
+            const count = document.createElement('span');
+            count.className = 'n';
+            count.textContent = n;
+            a.appendChild(count);
+        }
+        li.appendChild(a);
+        list.appendChild(li);
+        links.set(room, a);
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (room.querySelector('.room-toggle')) setOpen(room, true);
+            save();
+            history.pushState(null, '', a.hash);
+            room.scrollIntoView({ behavior: 'instant' });
+        });
+
+        if (!hasMore(room)) {
+            room.classList.add('open');
+            return;
+        }
+
+        const toggle = document.createElement('button');
+        toggle.className = 'room-toggle';
+        room.querySelector('.section-head').appendChild(toggle);
+
+        const more = document.createElement('button');
+        more.className = 'room-more';
+        room.querySelector('.wrap').appendChild(more);
+
+        [toggle, more].forEach((btn) => btn.addEventListener('click', () => {
+            const opening = !room.classList.contains('open');
+            setOpen(room, opening);
+            save();
+            // Shutting a long room from its far end would otherwise leave you
+            // stranded a long way below where the page now is.
+            if (!opening) room.scrollIntoView({ behavior: 'instant' });
+        }));
+
+        setOpen(room, false);
+    });
+
+    document.querySelector('.hero').after(nav);
+    load().forEach((id) => {
+        const room = document.getElementById(id);
+        if (room && room.querySelector('.room-toggle')) setOpen(room, true);
+    });
+
+    // Where a load should land. A link to a room opens it; coming back from a
+    // piece returns to that piece's card; back/forward keeps the browser's own
+    // position; anything else starts at the top rather than at wherever the
+    // last visit happened to end.
+    const type = (performance.getEntriesByType('navigation')[0] || {}).type;
+    const fromPiece = (document.referrer.match(/\/pieces\/([^/]+)\//) || [])[1];
+    const target = location.hash && document.querySelector(location.hash);
+    const card = fromPiece && document.querySelector(`a[href^="pieces/${fromPiece}/"]`);
+    const home = target || (card && card.closest('.piece-card'));
+
+    if (type !== 'back_forward') history.scrollRestoration = 'manual';
+    if (home) {
+        const room = home.closest('section.block');
+        if (room && room.querySelector('.room-toggle')) setOpen(room, true);
+        save();
+        home.scrollIntoView({ behavior: 'instant', block: home === room ? 'start' : 'center' });
+    } else if (type !== 'back_forward') {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Light the room you're standing in on the floor plan.
+    if ('IntersectionObserver' in window) {
+        const seen = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (!e.isIntersecting) return;
+                links.forEach((a) => a.classList.remove('here'));
+                const a = links.get(e.target);
+                a.classList.add('here');
+                list.scrollLeft = a.offsetLeft - 8;
+            });
+        }, { rootMargin: '-20% 0px -75% 0px' });
+        rooms.forEach((r) => seen.observe(r));
+    }
+})();
+
 (function () {
     const overlay = document.querySelector('.panel-overlay');
     let openPanel = null;
