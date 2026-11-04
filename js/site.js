@@ -31,6 +31,12 @@
     const rooms = Array.from(document.querySelectorAll('section.block'));
     if (!rooms.length) return;
 
+    // Cards are appended oldest to newest. Rooms marked data-newest-first show them
+    // the other way round; a study that's a sequence simply isn't marked.
+    document.querySelectorAll('[data-newest-first] :is(.image-grid, .card-grid)').forEach((grid) => {
+        Array.from(grid.children).reverse().forEach((card) => grid.appendChild(card));
+    });
+
     const KEY = 'crows-makings-open';
     const load = () => {
         try { return JSON.parse(sessionStorage.getItem(KEY)) || []; }
