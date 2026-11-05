@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Note Nobody Rings</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: #0a0806; color: #e6dcc6; min-height: 100vh; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; }
+        .sidebar { width: 280px; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 22px; }
+        h1 { font-size: 1.1rem; margin-bottom: 6px; }
+        .subtitle { font-style: italic; color: #b5a688; font-size: 0.85rem; line-height: 1.45; margin-bottom: 18px; }
+        label { display: block; font-size: 0.8rem; color: #b5a688; margin: 16px 0 6px; }
+        input[type=range] { width: 100%; }
+        #partials { display: flex; gap: 6px; }
+        #partials button { flex: 1; padding: 7px 0; font-family: inherit; font-size: 0.9rem; background: transparent; color: #6f6450; border: 1px solid #3c3326; border-radius: 4px; cursor: pointer; }
+        #partials button.on { background: #3a2a18; color: #f0dca8; border-color: #8c6c3c; }
+        .note { margin-top: 18px; font-size: 0.75rem; color: #92866e; line-height: 1.45; }
+        #canvas-holder canvas { max-width: 100%; height: auto; border-radius: 4px; cursor: crosshair; }
+    </style>
+</head>
+<body>
+<a href="../../index.html" style="position:fixed;top:16px;left:16px;z-index:100;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.9);backdrop-filter:blur(6px);color:#141413;text-decoration:none;font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(20,20,19,0.12);border:1px solid #e8e6dc;">&larr; Crow's Makings</a>
+<div class="container">
+    <div class="sidebar">
+        <h1>The Note Nobody Rings</h1>
+        <p class="subtitle">Everything here is ringing except the thing you see.</p>
+        <label>partials, sounding (click to silence)</label>
+        <div id="partials"></div>
+        <label for="mistune">the third, pulled flat</label>
+        <input type="range" id="mistune" min="0" max="80" step="1" value="0">
+        <p class="note">Click the bronze to strike it. Six sets of ripples, at two to seven times a pitch that none of them sounds. A bell's strike note works this way: no part of the metal carries it, and the ear hears it anyway. Silence any one and see what's left. Silence all but one.</p>
+    </div>
+    <div id="canvas-holder"></div>
+</div>
+<script src="note-logic.js"></script>
+<script src="sketch.js"></script>
+</body>
+</html>
