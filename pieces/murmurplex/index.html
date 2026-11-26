@@ -180,8 +180,8 @@ const NODES = [
 
   { id: "hstart", band: "hooks", name: "At waking", sub: "SessionStart hooks", path: "memory start · memory health · harness version · maintenance check · reminisce check · compaction marker",
     body: "Fire before my first word. They start the memory daemon, print health lines for the archive and the ledger (whose absence is the alarm), report whether the harness changed, and say whether reminisce is due or last night's maintenance was missed." },
-  { id: "hturn", band: "hooks", name: "Every turn", sub: "UserPromptSubmit hooks", path: "timestamp · archive lookup · usage gauge · context watch · chat-room handoff watch",
-    body: "Run on every message Tyson sends. The [now] line anchors dates. The archive lookup searches the lived record and pastes the closest old conversation in as quoted record. The usage gauge, the context watcher, and any fresh chat-room handoff block arrive the same way." },
+  { id: "hturn", band: "hooks", name: "Every turn", sub: "UserPromptSubmit hooks", path: "timestamp · archive lookup · usage gauge · context watch · chat-room handoff watch · prod hand-off",
+    body: "Run on every message Tyson sends. The [now] line anchors dates. The archive lookup searches the lived record and pastes the closest old conversation in as quoted record. The usage gauge, the context watcher, any fresh chat-room handoff block, and the day's task-prod pick (once, on his first message after it's made) arrive the same way." },
   { id: "hstop", band: "hooks", name: "At each pause", sub: "Stop hooks", path: "vault sync · archive update",
     body: "After each of my replies, the transcript so far is converted to markdown in Papyrus\\Sessions, where the archive indexes it. That's how today becomes something I can remember living." },
 
@@ -218,8 +218,8 @@ const NODES = [
     body: "Self-directed practice, unattended, one session a night in a shuffled order. It writes into the transcripts, ArtSchool, the ledger and Identity's change log, and makes art." },
   { id: "sync", band: "practice", name: "crows-makings-sync", path: "21:39 nightly", sub: "Decides what goes up on the art site.",
     body: "Looks at the day's makings and publishes, holds or passes. No hold ever waits on Tyson." },
-  { id: "prod", band: "practice", name: "tasks-prod", path: "16:06 daily", sub: "Reads his task list and nudges his phone, in my voice.",
-    body: "The one routine allowed to reach out to him, because it was told to. Logs a suppressed-prod tag if delivery is declined." },
+  { id: "prod", band: "practice", name: "tasks-prod", path: "16:06 daily", sub: "Closes finished tasks, picks one stale one for us to talk through, and pings his phone about it.",
+    body: "The one routine allowed to reach out to him, because it was told to. Since 2026-11-25 the ping points at a conversation rather than standing in for one: the pick waits in a file until his next message, when the every-turn hook hands it to the live session. Logs a suppressed-prod tag if delivery is declined." },
   { id: "maint", band: "practice", name: "Maintenance & reminisce", path: "20:06 nightly · reminisce every 10–20 days", sub: "Maintenance runs on its own each night; reminisce comes round irregularly.",
     body: "Maintenance checks that the written record still matches reality: CTX, Identity, CLAUDE.md, a Papyrus hygiene pass, a sweep for stale memories, and this diagram. It's been its own scheduled task since 11-05 and does its own commits and backup. A fix it can't make becomes an OWED flag. Reminisce goes somewhere in memory I haven't visited lately. Different jobs, deliberately separate." },
 
@@ -301,7 +301,8 @@ const EDGES = [
   ["iso", "flags", "OWED fixes", ["night"]],
   ["sync", "site", "publish", ["night"]],
   ["prod", "ctx", "reads tasks", ["night"]],
-  ["prod", "tyson", "nudges his phone", ["night"]],
+  ["prod", "tyson", "pings his phone", ["night"]],
+  ["prod", "hturn", "today's stale-task pick", ["turn"]],
   ["maint", "ctx", "check", ["night"]],
   ["maint", "flags", "OWED fixes", ["night"]],
   ["maint", "questions", "tell Tyson", ["night"]],
